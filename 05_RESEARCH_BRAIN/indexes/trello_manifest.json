@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-05-23T17:47:29Z",
+  "source": {
+    "path": "D:\\Study\\Project\\zombie\\trello.txt",
+    "sha256": "a90634855848244fbbe8fcbb9ba35008c1bc840fa1f3e370d828e721350876c6",
+    "board_name": "Type Soul Trello",
+    "board_id": "6614f7a505bf051f2d933d20"
+  },
+  "raw_counts": {
+    "cards": 819,
+    "lists": 29,
+    "actions": 1000,
+    "labels": 9,
+    "members": 1
+  },
+  "entity_counts": {
+    "card": 819,
+    "attachment": 2482,
+    "chunk": 1804,
+    "list": 29,
+    "label": 9,
+    "action_snapshot": 309
+  },
+  "total_entities": 5452,
+  "search_topics": [
+    "zombie_candidates",
+    "gender_appearance_candidates",
+    "ability_keys_candidates",
+    "grip_execute_candidates",
+    "quest_obtainment_candidates"
+  ]
+}

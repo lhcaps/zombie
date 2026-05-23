@@ -219,6 +219,35 @@ These constraints are established from existing evidence and should be treated a
 
 Any hypothesis violating these constraints is BLOCKED.
 
+## Large Source Rule
+
+Never reason directly over the full Trello raw JSON.
+
+Use this pipeline:
+1. normalize raw Trello into entities (`trello_normalize.py`)
+2. index entities into SQLite FTS5 (`trello_index.py`)
+3. retrieve relevant evidence by topic (`build_evidence_pack.py` or `trello_search.py`)
+4. build evidence pack (`build_evidence_pack.py`)
+5. extract claims (`extract_claims_batch.py`)
+6. generate hypotheses from claims (`generate_hypotheses_from_claims.py`)
+7. rank hypotheses (`rank_hypotheses.py`)
+8. generate test protocol (`generate_next_tests.py`)
+
+The model may not claim it has considered the full Trello unless the evidence pack manifest shows:
+- raw file SHA256 hash
+- number of indexed cards
+- number of indexed lists
+- number of indexed attachments
+- number of retrieved chunks
+- retrieval queries used
+
+Key constraints:
+- Raw Trello JSON must NEVER be read directly in a reasoning prompt.
+- Use the search/index/view system for focused retrieval.
+- All hypotheses must cite claim_id and source entity_id.
+- Evidence pack is the single source of truth for LLM reasoning.
+- Image claims must go through `analyze_hint_image.py` before ingestion.
+
 ## Important
 
 You are NOT a model trainer. You are NOT optimizing for prediction loss.

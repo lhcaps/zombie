@@ -200,3 +200,19 @@ def error(msg: str) -> None:
 
 def ok(msg: str) -> None:
     print(f"  [OK] {msg}")
+
+
+def _recompute_stats(ledger: dict) -> None:
+    claims = ledger.get("claims", [])
+    by_type: dict[str, int] = {}
+    by_status: dict[str, int] = {}
+    for c in claims:
+        t = c.get("type", "unknown")
+        s = c.get("status", "unknown")
+        by_type[t] = by_type.get(t, 0) + 1
+        by_status[s] = by_status.get(s, 0) + 1
+    ledger["stats"] = {
+        "total_claims": len(claims),
+        "by_type": by_type,
+        "by_status": by_status,
+    }
