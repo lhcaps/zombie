@@ -1,0 +1,240 @@
+{
+  "version": "1.0",
+  "created_at": "2026-05-23T00:00:00Z",
+  "hypotheses": [
+    {
+      "hypothesis_id": "HYP-COMMANDS-001",
+      "title": "Return/Die Commands Required",
+      "summary": "The clean route requires using return/die/invade commands in sequence to activate specific zombie states needed for the quest completion. This contradicts current evidence that commands are deprecated.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "same_gender_targets",
+        "return_command",
+        "die_command",
+        "specific_command_sequence",
+        "manual_grip"
+      ],
+      "supporting_claims": [],
+      "contradicting_claims": [
+        "CLM-0012"
+      ],
+      "unknowns": [
+        "What is the exact command sequence?"
+      ],
+      "test_cost": 5,
+      "risk": 4,
+      "likelihood": 0.0005,
+      "expected_info_gain": 1.0,
+      "evidence_fit": 0.02,
+      "constraint_fit": 0.0,
+      "priority_score": 0.0,
+      "status": "rejected",
+      "test_protocol_id": null,
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "REJECTED. Violates hard constraint CLM-0012 (no commands). 0.01% simulation probability."
+    },
+    {
+      "hypothesis_id": "HYP-CHAR_MIRROR-001",
+      "title": "Character Mirror + Same-Gender Final",
+      "summary": "After one gender reroll and ~50 same-gender manual-grip zombifications through passive Blood Bar, activate character-copy/mirror relation, then perform final same-gender zombify/check while the mirror relation is active. The count must be discovered via milestone checks at 40, 45, 49, 50 during one clean run. The character mirror is a separate mechanic from the count — both are required.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "same_gender_targets",
+        "manual_grip",
+        "passive_blood_bar",
+        "no_commands",
+        "no_volt_mode",
+        "character_mirror_activated_before_final_check",
+        "final_zombify_while_mirror_active"
+      ],
+      "supporting_claims": [
+        "CLM-0005",
+        "CLM-0006",
+        "CLM-0007",
+        "CLM-0008",
+        "CLM-0017"
+      ],
+      "contradicting_claims": [],
+      "unknowns": [
+        "Does mirror need to be activated before, during, or after the count?",
+        "Does mirror mean appearance copy (bc rule) or literal mirror order (xy rule)?",
+        "Does final NPC check require NPC immediately or after short delay?",
+        "Is the count 40, 45, 49, or 50?"
+      ],
+      "test_cost": 4,
+      "risk": 2,
+      "likelihood": 0.558,
+      "expected_info_gain": 1.8,
+      "evidence_fit": 0.88,
+      "constraint_fit": 1.0,
+      "priority_score": 0.2511,
+      "status": "active",
+      "test_protocol_id": "PROT-0000",
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "Highest priority hypothesis. 55.8% simulation probability, 100% top-1 stability. Supported by bc_char(3.5), xy_mirror(3.2), bc_gender(3.2), appearance_copy_seen(3.0)."
+    },
+    {
+      "hypothesis_id": "HYP-BC_GENDER-001",
+      "title": "BC/xy Same-Gender Character Mirror Pair",
+      "summary": "The character mirror relation is specifically a bc/xy pair (bc=character rule, xy=mirror rule) where the player uses one gender and the NPC partner uses the opposite, with the final zombify/check happening between same-gender pair members. The bc entity matches character race/class while xy mirrors.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "bc_entity_matches_character_race",
+        "xy_entity_mirrors_bc_appearance",
+        "same_gender_zombification_after_count",
+        "manual_grip",
+        "passive_blood_bar"
+      ],
+      "supporting_claims": [
+        "CLM-0005",
+        "CLM-0006",
+        "CLM-0007",
+        "CLM-0008"
+      ],
+      "contradicting_claims": [],
+      "unknowns": [
+        "What exact mechanism activates the bc/xy mirror relation?",
+        "Does this require specific NPC dialogue to activate?",
+        "Is the bc/xy pair race-specific?"
+      ],
+      "test_cost": 5,
+      "risk": 3,
+      "likelihood": 0.299,
+      "expected_info_gain": 1.5,
+      "evidence_fit": 0.75,
+      "constraint_fit": 1.0,
+      "priority_score": 0.0897,
+      "status": "active",
+      "test_protocol_id": "PROT-0001",
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "Second-ranked simulation candidate. 29.9% probability."
+    },
+    {
+      "hypothesis_id": "HYP-APP_COPY-001",
+      "title": "Appearance Copy Before Count, Keep Active",
+      "summary": "The mechanic involves copying character appearance before beginning the zombification count, then keeping that appearance copy active throughout the count and final check. The copied appearance relationship must persist.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "appearance_copy_activated_before_count",
+        "same_gender_targets",
+        "count_preserves_appearance_copy",
+        "manual_grip",
+        "passive_blood_bar"
+      ],
+      "supporting_claims": [
+        "CLM-0005",
+        "CLM-0008",
+        "CLM-0017"
+      ],
+      "contradicting_claims": [],
+      "unknowns": [
+        "How is appearance copy triggered?",
+        "Does it require specific NPC interaction?",
+        "Does the copy persist through server reset?"
+      ],
+      "test_cost": 4,
+      "risk": 3,
+      "likelihood": 0.125,
+      "expected_info_gain": 1.2,
+      "evidence_fit": 0.6,
+      "constraint_fit": 1.0,
+      "priority_score": 0.0375,
+      "status": "active",
+      "test_protocol_id": "PROT-0002",
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "Third-ranked simulation candidate. 12.5% probability."
+    },
+    {
+      "hypothesis_id": "HYP-PASSIVE-001",
+      "title": "Passive Blood Bar + Manual Grip Counters",
+      "summary": "The tail involves two separate hidden counters: one for passive Blood Bar accumulation and one for manual grip count. Both must reach threshold during the zombification sequence. The passive Blood Bar must be built up over time and the manual grip count must be precise.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "passive_blood_bar_accumulates_over_time",
+        "manual_grip_count_precise",
+        "same_gender_targets",
+        "both_thresholds_must_be_met"
+      ],
+      "supporting_claims": [
+        "CLM-0010",
+        "CLM-0011"
+      ],
+      "contradicting_claims": [],
+      "unknowns": [
+        "What are the exact thresholds for passive Blood Bar and grip count?",
+        "Is there a time window between accumulation and checking?"
+      ],
+      "test_cost": 6,
+      "risk": 3,
+      "likelihood": 0.02,
+      "expected_info_gain": 1.0,
+      "evidence_fit": 0.5,
+      "constraint_fit": 1.0,
+      "priority_score": 0.0033,
+      "status": "weak",
+      "test_protocol_id": null,
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "Low evidence fit. 0.3% simulation probability. Marked WEAK — possible but needs stronger evidence."
+    },
+    {
+      "hypothesis_id": "HYP-COUNT_ONLY-001",
+      "title": "Count Only — No Tail Required",
+      "summary": "One reroll plus same-gender zombification amount alone completes the quest. The count (40, 45, 49, or 50) is the only requirement. No additional character mirror, passive grip, or other tail mechanics needed. The milestone checks at 40/45/49/50 are for discovering the count, not for a separate mechanic.",
+      "required_conditions": [
+        "exactly_one_gender_reroll",
+        "same_gender_targets",
+        "count_reaches_exact_threshold",
+        "manual_grip",
+        "passive_blood_bar",
+        "no_tail_mechanic"
+      ],
+      "supporting_claims": [
+        "CLM-0003",
+        "CLM-0004",
+        "CLM-0009",
+        "CLM-0011"
+      ],
+      "contradicting_claims": [
+        "CLM-0005",
+        "CLM-0017"
+      ],
+      "unknowns": [
+        "What is the exact count?",
+        "Are there any other hidden requirements?"
+      ],
+      "test_cost": 3,
+      "risk": 2,
+      "likelihood": 0.001,
+      "expected_info_gain": 3.0,
+      "evidence_fit": 0.3,
+      "constraint_fit": 1.0,
+      "priority_score": 0.001,
+      "status": "active",
+      "test_protocol_id": null,
+      "last_tested_at": null,
+      "created_at": "2026-05-21T00:00:00Z",
+      "updated_at": "2026-05-23T00:00:00Z",
+      "notes": "Low likelihood but should be tested as a control. If PASS, would eliminate all tail hypotheses. 0.1% simulation probability."
+    }
+  ],
+  "stats": {
+    "total": 6,
+    "active": 4,
+    "weak": 1,
+    "blocked": 0,
+    "rejected": 1,
+    "deprecated": 0,
+    "confirmed": 0,
+    "untested": 6
+  }
+}

@@ -2,104 +2,175 @@
 
 This folder is organized around the latest usable Zombie Almighty theory and test material.
 
-## Use These First
+## Three-Layer Architecture
 
-Final shareable files are in `00_FINAL/`:
+The project uses three layers:
+
+| Layer | Name | Purpose | Directory |
+|-------|------|---------|-----------|
+| Layer 1 | **Knowledge** | Sources, claims, evidence, contradictions | `05_RESEARCH_BRAIN/` |
+| Layer 2 | **Reasoning** | Constraints, hypotheses, scoring, decisions | `05_RESEARCH_BRAIN/` |
+| Layer 3 | **Testing** | Protocols, run results, coverage, simulation | `03_TOOLS/` |
+
+## Research Brain — Primary Reasoning Engine
+
+**`05_RESEARCH_BRAIN/`** is the main reasoning layer for quest discovery.
+
+```
+Sources (docs, images, notes)
+        ↓
+ingest_sources.py
+        ↓
+extract_claims.py        → claim_ledger.json
+        ↓
+build_claim_table.py    → constraint_model.md
+        ↓
+Hypotheses             → hypothesis_board.json
+        ↓
+rank_hypotheses.py
+        ↓
+generate_next_tests.py  → test_protocols/
+        ↓
+Test in game
+        ↓
+zombie_test_runner.py --mode=record --rich  → run_results/
+        ↓
+update_after_result.py  → belief update + decision log
+        ↓
+export_research_report.py
+        ↓
+Repeat
+```
+
+### Quick Start
+
+```bash
+# 1. Ingest new source documents
+python 05_RESEARCH_BRAIN/scripts/ingest_sources.py --path ../01_SOURCES/new_doc.md --title "My Note"
+python 05_RESEARCH_BRAIN/scripts/ingest_sources.py --list
+
+# 2. Extract claims from all sources
+python 05_RESEARCH_BRAIN/scripts/extract_claims.py --all --llm-backend openai
+
+# 3. Build constraint model
+python 05_RESEARCH_BRAIN/scripts/build_claim_table.py
+
+# 4. Rank hypotheses
+python 05_RESEARCH_BRAIN/scripts/rank_hypotheses.py
+python 05_RESEARCH_BRAIN/scripts/rank_hypotheses.py --hypothesis-id HYP-CHAR_MIRROR-001
+
+# 5. Generate test protocols
+python 05_RESEARCH_BRAIN/scripts/generate_next_tests.py --top-n 3
+
+# 6. After testing: record result
+python 03_TOOLS/zombie_test_runner.py --mode=record --case-id=CORE_F_50 --outcome=fail --rich --hypothesis-id=HYP-CHAR_MIRROR-001 --run-id=RUN-20260523-001 --confidence=high --gender=F --race="Soul Reaper" --count-target=50 --count-actual=50 --npc-after="..." --notes="..."
+
+# 7. Update beliefs
+python 05_RESEARCH_BRAIN/scripts/update_after_result.py --run-id=RUN-20260523-001
+
+# 8. Export report
+python 05_RESEARCH_BRAIN/scripts/export_research_report.py
+```
+
+### Research Brain Files
+
+- `program.md` — agent instructions (read first)
+- `research_rules.md` — 10 golden rules and anti-patterns
+- `source_registry.json` — all ingested sources (9 sources)
+- `claim_ledger.json` — 17 atomic claims with evidence
+- `hypothesis_board.json` — 6 hypotheses ranked by priority
+- `contradiction_log.md` — conflicts between claims
+- `decision_log.md` — every research decision with reasoning
+- `open_questions.md` — 9 open questions driving research
+- `schemas/` — JSON schemas for all data types
+- `prompts/` — LLM prompts for each reasoning step
+- `scripts/` — 7 Python scripts for the pipeline
+- `test_protocols/` — generated test protocols
+- `run_results/` — recorded test results in rich format
+
+### Current Top Hypothesis
+
+**HYP-CHAR_MIRROR-001** (Priority: 0.251, Likelihood: 55.8%)
+
+```
+After one gender reroll and ~50 same-gender manual-grip zombifications
+through passive Blood Bar, activate character-copy/mirror relation,
+then perform final same-gender zombify/check while the mirror is active.
+```
+
+## Testing Tools — Execution Layer
+
+**`03_TOOLS/`** handles test execution, simulation, and coverage tracking.
+
+```bash
+cd 03_TOOLS
+
+# List all test cases
+python zombie_test_runner.py --mode=list
+
+# Ranked priorities
+python zombie_test_runner.py --mode=priorities
+
+# Next best test
+python zombie_test_runner.py --mode=next
+
+# Coverage report
+python zombie_test_runner.py --mode=coverage
+
+# Tail simulation
+python zombie_test_runner.py --mode=simulate
+
+# Dispatch to agents
+python zombie_test_runner.py --mode=dispatch --max=4
+
+# Full analysis report
+python zombie_test_runner.py --mode=report
+
+# Generate test cases
+python zombie_test_runner.py --mode=generate
+
+# Record a result (legacy format)
+python zombie_test_runner.py --mode=record --case-id=CORE_F_50 --outcome=fail
+
+# Record a result (Research Brain format, recommended)
+python zombie_test_runner.py --mode=record --case-id=TAIL_F_50_CHAR_MIRROR --outcome=fail \
+    --rich --hypothesis-id=HYP-CHAR_MIRROR-001 --confidence=high \
+    --gender=F --count-target=50 --count-actual=50 --npc-after="..." --notes="..."
+```
+
+### Hard Constraints (Immovable)
+
+- Exactly one gender reroll for clean route
+- Same-gender targets after reroll
+- Any race, non-unique targets
+- Passive Blood Bar involved
+- Manual grip zombification
+- No return/die/invade commands
+- No Volt/mode required
+- Zombies do not need to act
+
+## Final Artifacts
+
+Final shareable files in `00_FINAL/`:
 
 - `Zombie Almighty.docx`
 - `Zombie Almighty.pdf`
-
-Use this package when sharing the current final:
-
-```text
-Zombie Almighty.zip
-```
-
-Newest working note after the SideCharacter update:
-
-```text
-02_WORKING_NOTES/ZOMBIE_QUEST_SIDECHARACTER_UPDATE.md
-```
-
-Current best theory:
-
-```text
-Gender reroll exactly once
--> zombify about 50 same-gender targets through passive Blood Bar + manual grip
--> resolve two hidden tail checks:
-   copy/mirror character appearance
-   plus same-gender final zombify/check while that relation is active
-```
-
-Latest simulation command:
-
-```text
-cd 03_TOOLS
-python zombie_test_runner.py --mode=simulate
-```
-
-Latest simulator result points to `char + mirror + gender`, not items/accessories, commands, Volt/mode, or repeated gender rerolls.
-
-Deprecated previous CSP theory, kept only for reference:
-
-```text
-A = quest holder starting gender
-B = first target gender
-C = second target gender
-
-Path = A/B/C gender assignment
-Domain = M or F
-Possible paths = MMM, MMF, MFM, MFF, FFF, FFM, FMF, FMM
-```
-
-Clean test route:
-
-```text
-one gender reroll
--> same-gender passive Blood Bar
--> knock
--> manual grip
--> confirm zombie
--> repeat/check at 40, 45, 49, 50
--> if no pass, test copy/mirror character appearance plus same-gender final grip while active
-```
-
-Important hard constraints:
-
-- No Volt/mode for clean tests.
-- No commands (`return`, `die`, `invade`).
-- Zombies do not need to do anything.
-- Quest holder does not need to be zombified.
-- Zombifying another Quincy is not needed.
-- Use passive Blood Bar and manual grip.
-- Do not use old repeated-reroll A/B/C or 2x2 matrix routes as the main path.
+- `Zombie Almighty.zip` (bundle for sharing)
 
 ## Folder Map
 
 - `00_FINAL/` - latest usable `Zombie_Almighty` final artifacts.
 - `01_SOURCES/` - original docs, hint images, Cristi screenshots, and extracted source text.
 - `02_WORKING_NOTES/` - current markdown notes and latest green-only image analysis.
-- `03_TOOLS/` - current final builder and latest test/scoring tools.
-- `03_TOOLS/build_zombie_almighty.py` - generates `Zombie Almighty.docx` and `Zombie Almighty.pdf`.
-- `03_TOOLS/zombie_tail_simulator.py` - current scorer for the last two-ish tasks.
-- `99_ARCHIVE_OLD_RUNS/2026-05-21_cleanup/` - old scripts, old analyses, old reports, old generated outputs.
-
-## Deprecated Files
-
-The older final docs with `Type_Soul_*`, `CSP`, `Deduction_Matrix`, and old reassessment names predate the SideCharacter update. They were moved to:
-
-```text
-99_ARCHIVE_OLD_RUNS/2026-05-22_zombie_almighty_replaced_outputs/
-```
-
-The old root `zombie.zip` was moved there as well. Use `Zombie Almighty.zip`.
+- `03_TOOLS/` - test runner, scorer, dispatcher, coverage tracker, document builder.
+- `04_AUTORESEARCH/` - optional model-training experiment (lowest priority).
+- `05_RESEARCH_BRAIN/` - primary reasoning engine: claims, hypotheses, protocols, evidence ledger.
+- `99_ARCHIVE_OLD_RUNS/` - archived old scripts, analyses, and outputs.
 
 ## Note
 
-`_Zombie Checklist Database.docx` is also still visible in the root because it was locked by another process during cleanup. A complete copy is already preserved at:
+`_Zombie Checklist Database.docx` in root is locked by another process. A copy is at:
 
-```text
+```
 01_SOURCES/_Zombie Checklist Database.docx
 ```
-
-Once the lock is gone, the root duplicate can be moved or removed.

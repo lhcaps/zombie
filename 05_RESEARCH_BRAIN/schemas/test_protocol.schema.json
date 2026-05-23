@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TestProtocol",
+  "description": "A precise, executable test protocol for a hypothesis",
+  "type": "object",
+  "required": [
+    "protocol_id", "hypothesis_id", "goal", "hypothesis_summary",
+    "required_conditions", "controlled_variables", "tested_variables",
+    "steps", "record_fields", "pass_condition", "fail_condition",
+    "inconclusive_condition", "follow_up_on_pass", "follow_up_on_fail"
+  ],
+  "properties": {
+    "protocol_id": {
+      "type": "string",
+      "pattern": "^PROT-[0-9]{4}$",
+      "description": "Unique protocol identifier"
+    },
+    "hypothesis_id": {
+      "type": "string",
+      "pattern": "^HYP-[A-Z0-9_]+$",
+      "description": "Hypothesis this protocol tests"
+    },
+    "goal": {
+      "type": "string",
+      "description": "What this test aims to determine"
+    },
+    "hypothesis_summary": {
+      "type": "string",
+      "description": "Short summary of the hypothesis being tested"
+    },
+    "required_conditions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Preconditions that must be met before starting"
+    },
+    "controlled_variables": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Variables held constant during the test"
+    },
+    "tested_variables": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Variables this test probes"
+    },
+    "steps": {
+      "type": "array",
+      "description": "Ordered list of exact executable steps",
+      "items": {
+        "type": "object",
+        "required": ["step_number", "action", "what_to_record"],
+        "properties": {
+          "step_number": { "type": "integer", "minimum": 1 },
+          "phase": { "type": "string" },
+          "action": { "type": "string", "description": "Exact action to perform" },
+          "what_to_record": { "type": "string", "description": "What to capture/observe" },
+          "checkpoint": { "type": "boolean", "description": "Whether this is a checkpoint step" },
+          "optional": { "type": "boolean" }
+        }
+      }
+    },
+    "record_fields": {
+      "type": "object",
+      "description": "Fields to record for each run",
+      "properties": {
+        "npc_dialogue_before": { "type": "boolean" },
+        "npc_dialogue_after": { "type": "boolean" },
+        "gender_changes": { "type": "boolean" },
+        "race_changes": { "type": "boolean" },
+        "balance_before": { "type": "boolean" },
+        "balance_after": { "type": "boolean" },
+        "blood_bar_state": { "type": "boolean" },
+        "count_progress": { "type": "boolean" },
+        "screenshots": { "type": "boolean" },
+        "video": { "type": "boolean" },
+        "game_version": { "type": "boolean" },
+        "server_type": { "type": "boolean" }
+      }
+    },
+    "pass_condition": {
+      "type": "string",
+      "description": "Exact conditions that constitute a PASS"
+    },
+    "fail_condition": {
+      "type": "string",
+      "description": "Exact conditions that constitute a FAIL"
+    },
+    "inconclusive_condition": {
+      "type": "string",
+      "description": "Exact conditions that make this test INCONCLUSIVE"
+    },
+    "common_mistakes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Known failure modes to avoid"
+    },
+    "follow_up_on_pass": {
+      "type": "string",
+      "description": "What to test next if this passes"
+    },
+    "follow_up_on_fail": {
+      "type": "string",
+      "description": "What to test next if this fails"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

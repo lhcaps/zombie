@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Source",
+  "description": "A document ingested into the Research Brain",
+  "type": "object",
+  "required": ["source_id", "source_path", "source_type", "ingested_at"],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "pattern": "^SRC-[0-9]{4}$",
+      "description": "Unique source identifier, e.g. SRC-0001"
+    },
+    "source_path": {
+      "type": "string",
+      "description": "Original file path or URL"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["markdown", "pdf", "docx", "json", "txt", "chat_log", "screenshot_description", "npc_dialogue", "test_result", "manual_note", "other"],
+      "description": "Format or origin type of the source"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title or filename"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Brief 1-2 sentence description of what this source contains"
+    },
+    "key_findings": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of key findings or assertions in this source"
+    },
+    "contradictions_detected": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Any contradictions detected relative to existing claims"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Topic tags for filtering"
+    },
+    "ingested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "added_by": {
+      "type": "string",
+      "description": "Who or what added this source"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Any additional notes about this source"
+    }
+  }
+}

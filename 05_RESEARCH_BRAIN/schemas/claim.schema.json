@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claim",
+  "description": "An atomic, machine-readable fact extracted from a source",
+  "type": "object",
+  "required": ["claim_id", "source_id", "claim", "type", "confidence", "evidence", "status", "tags"],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "pattern": "^CLM-[0-9]{4}$",
+      "description": "Unique claim identifier, e.g. CLM-0001"
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^SRC-[0-9]{4}$",
+      "description": "Source this claim was extracted from"
+    },
+    "claim": {
+      "type": "string",
+      "description": "Atomic factual statement. Must be specific and verifiable."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "hard_constraint",
+        "soft_constraint",
+        "observation",
+        "failed_test",
+        "passed_test",
+        "rumor",
+        "inference",
+        "deprecated_path"
+      ],
+      "description": "Classification of the claim type"
+    },
+    "polarity": {
+      "type": "string",
+      "enum": ["positive", "negative", "neutral"],
+      "description": "Whether this claim asserts or negates something"
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Confidence level based on source reliability and clarity"
+    },
+    "evidence": {
+      "type": "string",
+      "description": "Quote or reference to the specific evidence in the source"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "superseded", "contradicted", "deprecated", "pending_review"],
+      "description": "Current validity status of this claim"
+    },
+    "contradicts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CLM-[0-9]{4}$"
+      },
+      "description": "IDs of claims this contradicts"
+    },
+    "supported_by": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CLM-[0-9]{4}$"
+      },
+      "description": "IDs of claims that support this one"
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Topic tags for filtering and grouping"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Analyst notes about ambiguity or interpretation"
+    }
+  }
+}

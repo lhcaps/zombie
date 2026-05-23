@@ -1,0 +1,136 @@
+{
+  "protocol_id": "PROT-0002",
+  "hypothesis_id": "HYP-APP_COPY-001",
+  "goal": "Test whether Appearance Copy Before Count, Keep Active is the correct tail mechanic.",
+  "hypothesis_summary": "The mechanic involves copying character appearance before beginning the zombification count, then keeping that appearance copy active throughout the count and final check. The copied appearance relati",
+  "required_conditions": [
+    "exactly_one_gender_reroll",
+    "appearance_copy_activated_before_count",
+    "same_gender_targets",
+    "count_preserves_appearance_copy",
+    "manual_grip",
+    "passive_blood_bar"
+  ],
+  "controlled_variables": [
+    "race = Soul Reaper (or any)",
+    "server = private",
+    "world = base",
+    "no Volt mode",
+    "no commands (return/die/invade)"
+  ],
+  "tested_variables": [
+    "count threshold (40, 45, 49, 50)",
+    "character mirror activation timing",
+    "same-gender zombification"
+  ],
+  "steps": [
+    {
+      "step_number": 1,
+      "phase": "preparation",
+      "action": "Create new character. Enter game. Locate quest NPC.",
+      "what_to_record": "Character name, race, starting gender, server type, NPC dialogue before quest start.",
+      "checkpoint": true,
+      "optional": false
+    },
+    {
+      "step_number": 2,
+      "phase": "gender_reroll",
+      "action": "Perform exactly ONE gender reroll using in-game method.",
+      "what_to_record": "Gender before and after reroll. Confirm only one reroll used.",
+      "checkpoint": true,
+      "optional": false
+    },
+    {
+      "step_number": 3,
+      "phase": "passive_blood_bar",
+      "action": "Build passive Blood Bar by waiting/playing naturally. Do NOT use commands.",
+      "what_to_record": "Blood bar state before building. Time spent. Method used.",
+      "checkpoint": false,
+      "optional": false
+    },
+    {
+      "step_number": 4,
+      "phase": "target_selection",
+      "action": "Select same-gender targets. Targets can be any race, non-unique.",
+      "what_to_record": "Target genders confirmed match post-reroll gender. Target races noted.",
+      "checkpoint": false,
+      "optional": false
+    },
+    {
+      "step_number": 5,
+      "phase": "checkpoint_40",
+      "action": "Perform 40 same-gender manual-grip zombifications. Check NPC at count 40.",
+      "what_to_record": "NPC dialogue at count 40. Balance before and after. Any changes noted.",
+      "checkpoint": true,
+      "optional": true
+    },
+    {
+      "step_number": 6,
+      "phase": "checkpoint_45",
+      "action": "Continue to 45 total. Check NPC at count 45.",
+      "what_to_record": "NPC dialogue at count 45. Balance before and after.",
+      "checkpoint": true,
+      "optional": true
+    },
+    {
+      "step_number": 7,
+      "phase": "checkpoint_49",
+      "action": "Continue to 49 total. Check NPC at count 49.",
+      "what_to_record": "NPC dialogue at count 49. Balance before and after.",
+      "checkpoint": true,
+      "optional": true
+    },
+    {
+      "step_number": 8,
+      "phase": "mirror_activation",
+      "action": "Activate character mirror/copy mechanic. Use appropriate action to trigger appearance copy.",
+      "what_to_record": "Character appearance before and after activation. Any NPC dialogue triggered.",
+      "checkpoint": true,
+      "optional": false
+    },
+    {
+      "step_number": 9,
+      "phase": "final_zombify",
+      "action": "Perform final zombification to reach 50 total while mirror is active. Check NPC immediately after.",
+      "what_to_record": "NPC dialogue at count 50 with mirror active. Final balance. Character appearance state.",
+      "checkpoint": true,
+      "optional": false
+    },
+    {
+      "step_number": 10,
+      "phase": "verification",
+      "action": "Record final state. Document NPC response. Take screenshots of key moments.",
+      "what_to_record": "Complete NPC dialogue log. All screenshots. Final character state.",
+      "checkpoint": true,
+      "optional": false
+    }
+  ],
+  "record_fields": {
+    "npc_dialogue_before": true,
+    "npc_dialogue_after": true,
+    "gender_changes": true,
+    "race_changes": true,
+    "balance_before": true,
+    "balance_after": true,
+    "blood_bar_state": true,
+    "count_progress": true,
+    "screenshots": true,
+    "video": false,
+    "game_version": true,
+    "server_type": true
+  },
+  "pass_condition": "NPC dialogue indicates quest completion or significant progress. Balance/appearance changes match expected outcome for this mechanic.",
+  "fail_condition": "NPC dialogue unchanged after completing all steps. No progress indicator. Route fails to advance.",
+  "inconclusive_condition": "Test interrupted mid-execution. Wrong character state used. Checkpoint missed. Ambiguous NPC response.",
+  "common_mistakes": [
+    "Using auto-grip instead of manual grip",
+    "Wrong gender target selected after reroll",
+    "Missing NPC checkpoint at milestones",
+    "Activating mirror before passive Blood Bar is built",
+    "Server reset during test invalidates state"
+  ],
+  "follow_up_on_pass": "Test with opposite gender. Test with different count. Generate next tail mechanic test.",
+  "follow_up_on_fail": "Reduce count and retest. Try simpler tail mechanic. Fall back to next hypothesis.",
+  "created_at": "2026-05-23T15:04:49Z",
+  "_evidence_context": "## Hypothesis: Appearance Copy Before Count, Keep Active\nID: HYP-APP_COPY-001\nStatus: active\nSummary: The mechanic involves copying character appearance before beginning the zombification count, then keeping that appearance copy active throughout the count and final check. The copied appearance relationship must persist.\n\n### Supporting Claims\n- [CLM-0005] Character mirror (copy/mirror appearance) is a mechanic involved in the tail. (source: New Hint Reassessment — 2026-05-21, confidence: 0.72)\n- [CLM-0008] Character copy relationship is confirmed in the image solution. (source: Hint Image 2 Green Analysis, confidence: 0.88)\n- [CLM-0017] The tail involves copy/mirror character appearance + same-gender final zombify while mirror is active. (source: Final Solution Working Notes, confidence: 0.68)\n\n### Open Questions\n- ? How is appearance copy triggered?\n- ? Does it require specific NPC interaction?\n- ? Does the copy persist through server reset?\n"
+}

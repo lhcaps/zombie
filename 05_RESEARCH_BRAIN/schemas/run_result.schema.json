@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RunResult",
+  "description": "A complete test run result with full game state capture",
+  "type": "object",
+  "required": [
+    "run_id", "case_id", "hypothesis_id", "protocol_id",
+    "outcome", "confidence", "setup", "execution", "evidence"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-[0-9]{8}-[0-9]{3}$",
+      "description": "Unique run identifier, e.g. RUN-20260523-001"
+    },
+    "case_id": {
+      "type": "string",
+      "description": "Test case identifier this run corresponds to"
+    },
+    "hypothesis_id": {
+      "type": "string",
+      "pattern": "^HYP-[A-Z0-9_]+$",
+      "description": "Hypothesis this run tests"
+    },
+    "protocol_id": {
+      "type": "string",
+      "pattern": "^PROT-[0-9]{4}$",
+      "description": "Protocol used for this run"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INCONCLUSIVE"],
+      "description": "Test outcome"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "Confidence in the outcome assessment"
+    },
+    "setup": {
+      "type": "object",
+      "required": ["game", "server_type", "world", "starting_gender", "post_reroll_gender", "race", "mode_used", "commands_used"],
+      "properties": {
+        "game": { "type": "string" },
+        "server_type": { "type": "string" },
+        "world": { "type": "string" },
+        "starting_gender": { "type": "string" },
+        "post_reroll_gender": { "type": "string" },
+        "race": { "type": "string" },
+        "mode_used": { "type": "boolean" },
+        "commands_used": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["count_target", "actual_count", "target_gender", "blood_bar_method", "grip_method"],
+      "properties": {
+        "count_target": { "type": "integer" },
+        "actual_count": { "type": "integer" },
+        "target_gender": { "type": "string" },
+        "target_race": { "type": "string" },
+        "blood_bar_method": { "type": "string" },
+        "grip_method": { "type": "string" },
+        "character_mirror_active": { "type": "boolean" },
+        "npc_checked_at": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "npc_checked_values": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "rerolls_performed": { "type": "integer" },
+        "duration_min": { "type": "number" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "npc_before": { "type": "string" },
+        "npc_after": { "type": "string" },
+        "balance_before": { "type": "string" },
+        "balance_after": { "type": "string" },
+        "screenshots": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "video": { "type": "string" },
+        "raw_notes": { "type": "string" }
+      }
+    },
+    "interpretation": {
+      "type": "string",
+      "description": "Analyst interpretation of what this result means"
+    },
+    "belief_update": {
+      "type": "object",
+      "properties": {
+        "hypothesis_updated": { "type": "string" },
+        "old_likelihood": { "type": "number" },
+        "new_likelihood": { "type": "number" },
+        "reasoning": { "type": "string" }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes from the tester"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tester": {
+      "type": "string",
+      "description": "Who performed the test"
+    }
+  }
+}

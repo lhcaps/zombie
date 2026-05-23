@@ -1,10 +1,26 @@
 # zombie-autoresearch
 
-This is an experiment to have the LLM autonomously research the **Zombie Almighty** quest in Bleach: Brave Souls.
+**Status: OPTIONAL EXPERIMENT. Low priority for quest discovery.**
 
-## Context: What is this?
+## What is this?
 
-The parent project (`../03_TOOLS/`) already contains:
+This is an optional side experiment that trains a **nanochat-style GPT model** on the Zombie Almighty knowledge base to minimize `val_bpb`. It is NOT the primary research tool for the quest.
+
+## Why is it optional?
+
+The quest needs **reasoning + evidence**, not model training. The `val_bpb` metric measures text prediction accuracy, which is orthogonal to finding the correct game solution. The Research Brain (`05_RESEARCH_BRAIN/`) is the correct tool for quest discovery.
+
+This experiment is kept for:
+- Exploring whether better text modeling improves hypothesis generation
+- Personal curiosity about domain-specific small model training
+- It does NOT need to run for the quest to be solved
+
+## Quick Summary
+
+- **Goal**: Lowest `val_bpb` on zombie quest text corpus
+- **Scope**: Only `train.py` (read-only: `prepare.py`)
+- **Runtime**: 5 minutes per experiment
+- **Priority**: LOW — focus on `05_RESEARCH_BRAIN/` instead
 - `zombie_test_runner.py` — CLI tool that runs test cases against the game, scores them, and tracks coverage.
 - `zombie_tail_simulator.py` — scoring engine that evaluates which hypothesis variants best explain the observed test data.
 - `zombie_analysis.py`, `zombie_csp_model.py`, `zombie_dispatcher.py` — analysis, probability modeling, and multi-agent dispatch.

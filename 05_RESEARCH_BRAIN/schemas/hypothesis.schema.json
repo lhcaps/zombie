@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Hypothesis",
+  "description": "A candidate solution path with supporting evidence and scoring",
+  "type": "object",
+  "required": [
+    "hypothesis_id", "title", "summary", "required_conditions",
+    "supporting_claims", "contradicting_claims", "unknowns",
+    "test_cost", "risk", "likelihood",
+    "expected_info_gain", "priority_score", "status"
+  ],
+  "properties": {
+    "hypothesis_id": {
+      "type": "string",
+      "pattern": "^HYP-[A-Z0-9_]+$",
+      "description": "Unique hypothesis identifier, e.g. HYP-CHAR_MIRROR-001"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short descriptive title"
+    },
+    "summary": {
+      "type": "string",
+      "description": "One-paragraph description of the proposed solution path"
+    },
+    "required_conditions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of game state conditions required for this path"
+    },
+    "supporting_claims": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CLM-[0-9]{4}$"
+      },
+      "description": "Claim IDs that support this hypothesis"
+    },
+    "contradicting_claims": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CLM-[0-9]{4}$"
+      },
+      "description": "Claim IDs that contradict this hypothesis"
+    },
+    "unknowns": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Open questions or conditions with unknown values"
+    },
+    "test_cost": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Estimated difficulty/time to test (1=trivial, 10=very expensive)"
+    },
+    "risk": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Risk of wasting time if wrong (1=low, 5=high)"
+    },
+    "likelihood": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Estimated probability this is the correct path"
+    },
+    "expected_info_gain": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 10.0,
+      "description": "Expected reduction in search space if this test passes"
+    },
+    "evidence_fit": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How well this fits existing evidence (0-1)"
+    },
+    "constraint_fit": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How well this respects hard constraints (0-1)"
+    },
+    "priority_score": {
+      "type": "number",
+      "description": "Computed priority = likelihood * info_gain * constraint_fit / test_cost"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "weak", "blocked", "rejected", "deprecated", "confirmed"],
+      "description": "Current status of this hypothesis"
+    },
+    "test_protocol_id": {
+      "type": "string",
+      "description": "ID of the test protocol for this hypothesis"
+    },
+    "last_tested_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Analyst notes on reasoning or caveats"
+    }
+  }
+}

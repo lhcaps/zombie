@@ -1,0 +1,147 @@
+{
+  "version": "1.0",
+  "created_at": "2026-05-23T00:00:00Z",
+  "sources": [
+    {
+      "source_id": "SRC-0001",
+      "source_path": "01_SOURCES/zombie_source_extract/The_Almighty_Quests.txt",
+      "source_type": "txt",
+      "title": "The Almighty Quests",
+      "summary": "Core quest text and requirements for Zombie Almighty quest",
+      "key_findings": [
+        "Quest requires zombifying characters and meeting specific NPC check conditions",
+        "Quest appears to require specific character preparation"
+      ],
+      "contradictions_detected": [],
+      "tags": ["quest_text", "core_requirements"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0002",
+      "source_path": "01_SOURCES/zombie_source_extract/_Zombie_Checklist_Database.txt",
+      "source_type": "txt",
+      "title": "Zombie Checklist Database",
+      "summary": "Extracted text from game checklist with hints about zombification process",
+      "key_findings": [
+        "Contains checklist format with progress tracking hints",
+        "Contains media references for visual hints"
+      ],
+      "contradictions_detected": [],
+      "tags": ["checklist", "hints", "game_content"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0003",
+      "source_path": "01_SOURCES/zombie_source_extract/TYPE___SOUL_-_Almighty_All_Zombe_Hints.txt",
+      "source_type": "txt",
+      "title": "Almighty All Zombe Hints",
+      "summary": "Complete hint text extracted from game hints document",
+      "key_findings": [
+        "Contains hints about gender reroll mechanics",
+        "Contains hints about zombification targets and count",
+        "Contains hints about character mirroring/mirroring relation"
+      ],
+      "contradictions_detected": [],
+      "tags": ["hints", "game_content", "gender", "character_mirror"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0004",
+      "source_path": "02_WORKING_NOTES/ZOMBIE_QUEST_SIDECHARACTER_UPDATE.md",
+      "source_type": "markdown",
+      "title": "SideCharacter Update — 2026-05-22",
+      "summary": "Latest working theory: gender reroll once, same-gender passive zombify, discover count, mirror character appearance, same-gender final check",
+      "key_findings": [
+        "Proposed route: reroll exactly once, zombify same-gender, discover count, copy/mirror character appearance, plus same-gender final zombify while mirror is active",
+        "Evidence: bc=char rule, xy=mirror rule from image solution",
+        "Character mirror is a separate mechanic from the count",
+        "Passive Blood Bar buildup is a prerequisite"
+      ],
+      "contradictions_detected": [],
+      "tags": ["theory", "gender_reroll", "character_mirror", "sidecharacter", "count"],
+      "ingested_at": "2026-05-22T23:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0005",
+      "source_path": "02_WORKING_NOTES/ZOMBIE_QUEST_NEW_HINT_REASSESSMENT.md",
+      "source_type": "markdown",
+      "title": "New Hint Reassessment — 2026-05-21",
+      "summary": "CSP model with probability scoring for count candidates and unknown pair candidates",
+      "key_findings": [
+        "Count 50: confidence 0.42, count 49: 0.23, count 45: 0.15, count 40: 0.08",
+        "CHAR_MIRROR candidate: 0.55 probability, supported by bc_char, xy_mirror, bc_gender, appearance_copy_seen",
+        "Character mirror + same-gender final zombify is top-ranked candidate"
+      ],
+      "contradictions_detected": [],
+      "tags": ["csp_model", "probability", "count", "tail", "character_mirror"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0006",
+      "source_path": "02_WORKING_NOTES/ZOMBIE_QUEST_FINAL_SOLUTION.md",
+      "source_type": "markdown",
+      "title": "Final Solution Working Notes",
+      "summary": "Final proposed solution path with step-by-step breakdown",
+      "key_findings": [
+        "9-step solution route proposed",
+        "Tail has 3 directional branches: character mirror, passive grip counter, count-only",
+        "Character mirror ranked first direction"
+      ],
+      "contradictions_detected": [],
+      "tags": ["solution", "steps", "route", "tail"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0007",
+      "source_path": "02_WORKING_NOTES/ZOMBIE_QUEST_ENGLISH_CHECKLIST.md",
+      "source_type": "markdown",
+      "title": "English Checklist",
+      "summary": "English version of the zombie quest checklist",
+      "key_findings": [
+        "Confirms gender reroll mechanics",
+        "Confirms same-gender zombification requirement"
+      ],
+      "contradictions_detected": [],
+      "tags": ["checklist", "english", "gender"],
+      "ingested_at": "2026-05-21T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0008",
+      "source_path": "02_WORKING_NOTES/image_latest_hint_analysis/hint_image2_green_only_analysis.json",
+      "source_type": "json",
+      "title": "Hint Image 2 Green Analysis",
+      "summary": "Image analysis showing character mirroring pattern: bc=char rule, xy=mirror rule",
+      "key_findings": [
+        "bc (uppercase) = character rule (matches race/class)",
+        "xy (lowercase) = mirror rule (mirrors partner)",
+        "Character copy relationship confirmed in image solution"
+      ],
+      "contradictions_detected": [],
+      "tags": ["image_analysis", "character_mirror", "bc", "xy"],
+      "ingested_at": "2026-05-22T00:00:00Z",
+      "added_by": "manual"
+    },
+    {
+      "source_id": "SRC-0099",
+      "source_path": "00_FINAL/Zombie Almighty.pdf",
+      "source_type": "pdf",
+      "title": "Zombie Almighty — Final Build",
+      "summary": "Current best theory document compiled from all sources",
+      "key_findings": [
+        "Consolidated solution from all working notes",
+        "Route summary: gender reroll, same-gender zombify, count discovery, character mirror tail"
+      ],
+      "contradictions_detected": [],
+      "tags": ["final", "consolidated", "solution"],
+      "ingested_at": "2026-05-22T23:00:00Z",
+      "added_by": "manual"
+    }
+  ]
+}
