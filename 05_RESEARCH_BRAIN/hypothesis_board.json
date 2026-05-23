@@ -33,7 +33,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "REJECTED. Violates hard constraint CLM-0012 (no commands). 0.01% simulation probability."
+      "notes": "REJECTED. Violates hard constraint CLM-0012 (no commands). 0.01% simulation probability.",
+      "evidence_support": 0.05,
+      "contradiction_risk": 0.95,
+      "novelty": 0.3,
+      "testability": 0.3,
+      "mechanic_plausibility": 0.05
     },
     {
       "hypothesis_id": "HYP-CHAR_MIRROR-001",
@@ -75,7 +80,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "Highest priority hypothesis. 55.8% simulation probability, 100% top-1 stability. Supported by bc_char(3.5), xy_mirror(3.2), bc_gender(3.2), appearance_copy_seen(3.0)."
+      "notes": "Highest priority hypothesis. 55.8% simulation probability, 100% top-1 stability. Supported by bc_char(3.5), xy_mirror(3.2), bc_gender(3.2), appearance_copy_seen(3.0).",
+      "evidence_support": 0.75,
+      "contradiction_risk": 0.15,
+      "novelty": 0.7,
+      "testability": 0.6,
+      "mechanic_plausibility": 0.8
     },
     {
       "hypothesis_id": "HYP-BC_GENDER-001",
@@ -113,7 +123,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "Second-ranked simulation candidate. 29.9% probability."
+      "notes": "Second-ranked simulation candidate. 29.9% probability.",
+      "evidence_support": 0.6,
+      "contradiction_risk": 0.2,
+      "novelty": 0.5,
+      "testability": 0.5,
+      "mechanic_plausibility": 0.7
     },
     {
       "hypothesis_id": "HYP-APP_COPY-001",
@@ -150,7 +165,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "Third-ranked simulation candidate. 12.5% probability."
+      "notes": "Third-ranked simulation candidate. 12.5% probability.",
+      "evidence_support": 0.3,
+      "contradiction_risk": 0.4,
+      "novelty": 0.6,
+      "testability": 0.5,
+      "mechanic_plausibility": 0.5
     },
     {
       "hypothesis_id": "HYP-PASSIVE-001",
@@ -184,7 +204,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "Low evidence fit. 0.3% simulation probability. Marked WEAK — possible but needs stronger evidence."
+      "notes": "Low evidence fit. 0.3% simulation probability. Marked WEAK — possible but needs stronger evidence.",
+      "evidence_support": 0.3,
+      "contradiction_risk": 0.5,
+      "novelty": 0.4,
+      "testability": 0.6,
+      "mechanic_plausibility": 0.4
     },
     {
       "hypothesis_id": "HYP-COUNT_ONLY-001",
@@ -224,7 +249,12 @@
       "last_tested_at": null,
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-23T00:00:00Z",
-      "notes": "Low likelihood but should be tested as a control. If PASS, would eliminate all tail hypotheses. 0.1% simulation probability."
+      "notes": "Low likelihood but should be tested as a control. If PASS, would eliminate all tail hypotheses. 0.1% simulation probability.",
+      "evidence_support": 0.15,
+      "contradiction_risk": 0.6,
+      "novelty": 0.4,
+      "testability": 0.8,
+      "mechanic_plausibility": 0.3
     }
   ],
   "stats": {
@@ -236,5 +266,11 @@
     "deprecated": 0,
     "confirmed": 0,
     "untested": 6
+  },
+  "lists": {
+    "Research Output": {
+      "description": "Hypotheses generated from evidence packs",
+      "created_at": "2026-05-23T00:00:00Z"
+    }
   }
 }

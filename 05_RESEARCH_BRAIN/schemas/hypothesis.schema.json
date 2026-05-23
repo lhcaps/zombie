@@ -79,6 +79,36 @@
       "maximum": 1.0,
       "description": "How well this respects hard constraints (0-1)"
     },
+    "evidence_support": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How much direct evidence supports this hypothesis"
+    },
+    "contradiction_risk": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Risk that known facts contradict this hypothesis (0=safe, 1=high risk)"
+    },
+    "novelty": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How novel/informative this hypothesis is relative to existing knowledge"
+    },
+    "testability": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How testable this hypothesis is with available tools"
+    },
+    "mechanic_plausibility": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "How plausible this mechanic is given game design and known patterns"
+    },
     "priority_score": {
       "type": "number",
       "description": "Computed priority = likelihood * info_gain * constraint_fit / test_cost"
@@ -113,6 +143,14 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Run IDs already applied to this hypothesis. Prevents belief updates from being applied multiple times"
+    },
+    "board_list": {
+      "type": "string",
+      "description": "Which hypothesis board list this hypothesis belongs to"
+    },
+    "evidence_pack_id": {
+      "type": "string",
+      "description": "Idempotency key — evidence pack that generated this hypothesis"
     }
   }
 }

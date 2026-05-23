@@ -7,3 +7,27 @@
 
 # Python cache
 __pycache__/
+
+# Raw Trello data — private, should never be committed
+trello.txt
+*.orig.json
+
+# Research Brain indexes — large binary DB files
+05_RESEARCH_BRAIN/indexes/*.db
+05_RESEARCH_BRAIN/indexes/*.db-*
+05_RESEARCH_BRAIN/indexes/*.db-shm
+05_RESEARCH_BRAIN/indexes/*.db-wal
+
+# Generated artifacts that should be regenerated, not committed
+05_RESEARCH_BRAIN/evidence_packs/EPACK-*.json
+05_RESEARCH_BRAIN/evidence_packs/EPACK-*.md
+05_RESEARCH_BRAIN/test_protocols/PROT-*.json
+05_RESEARCH_BRAIN/run_results/RUN-*.json
+
+# Committed artifacts allowed
+!05_RESEARCH_BRAIN/evidence_packs/EPACK-2ISH-001.json
+!05_RESEARCH_BRAIN/evidence_packs/EPACK-2ISH-001.md
+!05_RESEARCH_BRAIN/test_protocols/PROT-0000.json
+!05_RESEARCH_BRAIN/test_protocols/PROT-0001.json
+!05_RESEARCH_BRAIN/test_protocols/PROT-0002.json
+!05_RESEARCH_BRAIN/test_protocols/PROT-0003.json

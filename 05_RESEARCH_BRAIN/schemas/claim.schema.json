@@ -3,7 +3,7 @@
   "title": "Claim",
   "description": "An atomic, machine-readable fact extracted from a source",
   "type": "object",
-  "required": ["claim_id", "source_id", "claim", "type", "confidence", "evidence", "status", "tags"],
+  "required": ["claim_id", "source_id", "claim", "type", "confidence", "evidence", "status", "tags", "source_entity_ids", "quote_spans"],
   "properties": {
     "claim_id": {
       "type": "string",
@@ -62,6 +62,16 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "IDs of claims that support this one"
+    },
+    "source_entity_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Entity IDs from the evidence pack that support this claim. Required for traceability."
+    },
+    "quote_spans": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Exact text spans/quotes from source that support this claim. Required for verification."
     },
     "tags": {
       "type": "array",

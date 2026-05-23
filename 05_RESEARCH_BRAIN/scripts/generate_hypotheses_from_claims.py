@@ -116,9 +116,41 @@ def _build_hypothesis(
     if "unverified" in " ".join(unknowns).lower():
         risk += 1
 
-    confidence = 0.1
+    # Multi-axis scoring (game mechanic research specific)
+    evidence_support = 0.1
     if supporting:
-        confidence = min(0.7, 0.1 + len(supporting) * 0.1)
+        evidence_support = min(0.8, 0.1 + len(supporting) * 0.15)
+    if item.get("evidence"):
+        evidence_support = min(0.9, evidence_support + 0.2)
+
+    contradiction_risk = 0.5
+    if any(h.get("status") in ("rejected", "deprecated") for h in existing_hyps):
+        contradiction_risk = 0.6
+    if "unverified" in " ".join(unknowns).lower():
+        contradiction_risk = min(0.9, contradiction_risk + 0.2)
+
+    novelty = 0.5
+    if len(conditions) >= 4:
+        novelty = 0.7
+    if unknowns:
+        novelty = min(0.9, novelty + 0.1)
+
+    testability = 0.6
+    if len(conditions) <= 3:
+        testability = 0.8
+    if len(conditions) > 7:
+        testability = 0.3
+
+    mechanic_plausibility = 0.5
+    cond_text = " ".join(conditions).lower()
+    if any(t in cond_text for t in ontology["actions"]):
+        mechanic_plausibility = 0.7
+    if any(s in cond_text for s in ontology["states"]):
+        mechanic_plausibility = min(0.85, mechanic_plausibility + 0.1)
+
+    likelihood = 0.1
+    if supporting:
+        likelihood = min(0.7, 0.1 + len(supporting) * 0.1)
 
     return {
         "hypothesis_id": hyp_id,
@@ -130,10 +162,17 @@ def _build_hypothesis(
         "unknowns": unknowns,
         "test_cost": test_cost,
         "risk": risk,
-        "likelihood": confidence,
+        "likelihood": likelihood,
         "expected_info_gain": 2.0,
         "evidence_fit": 0.5,
         "constraint_fit": 1.0,
+        # Multi-axis scoring
+        "evidence_support": round(evidence_support, 3),
+        "contradiction_risk": round(contradiction_risk, 3),
+        "novelty": round(novelty, 3),
+        "testability": round(testability, 3),
+        "mechanic_plausibility": round(mechanic_plausibility, 3),
+        # Final score (weighted combination of multi-axis)
         "priority_score": 0.0,
         "status": "active",
         "test_protocol_id": None,
@@ -154,6 +193,7 @@ def _critique_hypothesis(hyp: dict, existing_hyps: list[dict]) -> dict:
     if not hyp.get("supporting_claims"):
         critiques.append("No supporting claims — generates only from inference")
         hyp["evidence_fit"] = max(0.0, hyp.get("evidence_fit", 0.5) - 0.2)
+        hyp["evidence_support"] = max(0.0, hyp.get("evidence_support", 0.1) - 0.2)
 
     if any(
         vague in summary_lower
@@ -164,6 +204,7 @@ def _critique_hypothesis(hyp: dict, existing_hyps: list[dict]) -> dict:
     ):
         critiques.append("Contains vague language — hypothesis too speculative")
         hyp["evidence_fit"] = max(0.0, hyp.get("evidence_fit", 0.5) - 0.15)
+        hyp["mechanic_plausibility"] = max(0.0, hyp.get("mechanic_plausibility", 0.5) - 0.15)
 
     for existing in existing_hyps:
         if existing.get("status") in ("rejected", "deprecated"):
@@ -184,18 +225,25 @@ def _critique_hypothesis(hyp: dict, existing_hyps: list[dict]) -> dict:
                             f"shares {overlap}"
                         )
                         hyp["constraint_fit"] = max(0.0, hyp.get("constraint_fit", 1.0) - 0.3)
+                        hyp["contradiction_risk"] = min(1.0, hyp.get("contradiction_risk", 0.5) + 0.3)
 
     conditions = hyp.get("required_conditions", [])
     if not conditions or len(conditions) < 2:
         critiques.append("Too few required conditions — hypothesis lacks specificity")
         hyp["evidence_fit"] = max(0.0, hyp.get("evidence_fit", 0.5) - 0.1)
+        hyp["testability"] = max(0.0, hyp.get("testability", 0.6) - 0.2)
 
-    priority = (
-        hyp.get("likelihood", 0.0)
-        * hyp.get("expected_info_gain", 1.0)
-        * hyp.get("constraint_fit", 1.0)
-        / max(hyp.get("test_cost", 1), 1)
-    )
+    # Multi-axis priority score
+    # = (evidence_support * constraint_fit * mechanic_plausibility * novelty)
+    #   / (test_cost * (1 + contradiction_risk))
+    ev = hyp.get("evidence_support", 0.1)
+    cf = hyp.get("constraint_fit", 1.0)
+    pl = hyp.get("mechanic_plausibility", 0.5)
+    nv = hyp.get("novelty", 0.5)
+    cr = hyp.get("contradiction_risk", 0.5)
+    tc = max(hyp.get("test_cost", 3), 1)
+
+    priority = (ev * cf * pl * nv) / (tc * (1.0 + cr))
     hyp["priority_score"] = round(priority, 4)
 
     if critiques:
@@ -353,6 +401,8 @@ def generate_hypotheses(
     evidence_pack_path: Path,
     out_path: Path,
     add_to_board: bool = False,
+    board_list: str | None = None,
+    idempotency_key: str | None = None,
 ) -> list[dict]:
     pack = json.loads(evidence_pack_path.read_text(encoding="utf-8"))
     chunks = pack.get("chunks", [])
@@ -397,15 +447,44 @@ def generate_hypotheses(
         if board_path.exists():
             board = json.loads(board_path.read_text(encoding="utf-8"))
         else:
-            board = {"version": "1.0", "created_at": utc_now(), "hypotheses": []}
+            board = {"version": "1.0", "created_at": utc_now(), "hypotheses": [], "lists": {}}
 
-        existing_ids = {h["hypothesis_id"] for h in board.get("hypotheses", [])}
+        # Ensure lists structure exists
+        if "lists" not in board:
+            board["lists"] = {}
+        if "hypotheses" not in board:
+            board["hypotheses"] = []
+
+        # Idempotency: check if this idempotency_key already exists
+        if idempotency_key:
+            existing = [h for h in board["hypotheses"]
+                        if h.get("evidence_pack_id") == idempotency_key]
+            if existing:
+                print(f"  [SKIP] Idempotency key '{idempotency_key}' already on board "
+                      f"({len(existing)} hypotheses). Use new --idempotency-key to update.")
+                return hypotheses
+
+        # Assign to list
+        list_name = board_list or "Research Output"
+        if list_name not in board["lists"]:
+            board["lists"][list_name] = {"description": "", "created_at": utc_now()}
+
+        existing_ids = {h["hypothesis_id"] for h in board["hypotheses"]}
+        added = 0
         for h in hypotheses:
             if h["hypothesis_id"] not in existing_ids:
+                h["board_list"] = list_name
+                if idempotency_key:
+                    h["evidence_pack_id"] = idempotency_key
                 board["hypotheses"].append(h)
+                added += 1
 
         save_json(board_path, board)
-        print(f"[OK] Added {len(hypotheses)} hypotheses to hypothesis_board.json")
+        print(f"[OK] Added {added} hypotheses to hypothesis_board.json "
+              f"(list: '{list_name}')")
+    else:
+        print(f"  [DRY RUN] Not writing to hypothesis_board.json "
+              f"(use --add-to-board --idempotency-key to commit)")
 
     return hypotheses
 
@@ -430,6 +509,15 @@ def main() -> None:
         "--add-to-board", action="store_true",
         help="Also append hypotheses to hypothesis_board.json"
     )
+    parser.add_argument(
+        "--board-list",
+        default="Research Output",
+        help="Trello list name for board mutation (default: 'Research Output')"
+    )
+    parser.add_argument(
+        "--idempotency-key",
+        help="Unique key for idempotent board writing (e.g. EPACK-2ISH-001)"
+    )
     args = parser.parse_args()
 
     pack_path = Path(args.evidence_pack)
@@ -440,7 +528,12 @@ def main() -> None:
     pack = json.loads(pack_path.read_text(encoding="utf-8"))
     question = args.question or pack.get("question", "Unknown question")
 
-    generate_hypotheses(question, pack_path, Path(args.out), args.add_to_board)
+    generate_hypotheses(
+        question, pack_path, Path(args.out),
+        add_to_board=args.add_to_board,
+        board_list=args.board_list,
+        idempotency_key=args.idempotency_key,
+    )
     print(f"[OK] Wrote hypotheses to {args.out}")
 
 

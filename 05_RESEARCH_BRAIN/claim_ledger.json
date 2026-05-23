@@ -8,15 +8,23 @@
       "claim": "Exactly one gender reroll is required for the clean route.",
       "type": "hard_constraint",
       "polarity": "positive",
-      "confidence": 0.90,
+      "confidence": 0.9,
       "evidence": "SideCharacter update: 'reroll exactly once'",
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["one_reroll", "clean_route", "gender"],
+      "tags": [
+        "one_reroll",
+        "clean_route",
+        "gender"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "SideCharacter update: 'reroll exactly once'"
+      ]
     },
     {
       "claim_id": "CLM-0002",
@@ -27,12 +35,24 @@
       "confidence": 0.92,
       "evidence": "SideCharacter update: 'zombify same-gender targets'",
       "status": "active",
-      "contradicts": ["CLM-0099"],
-      "supported_by": ["CLM-0008"],
-      "tags": ["same_gender", "clean_route", "targets"],
+      "contradicts": [
+        "CLM-0099"
+      ],
+      "supported_by": [
+        "CLM-0008"
+      ],
+      "tags": [
+        "same_gender",
+        "clean_route",
+        "targets"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "SideCharacter update: 'zombify same-gender targets'"
+      ]
     },
     {
       "claim_id": "CLM-0003",
@@ -45,10 +65,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["count", "count_50", "probability"],
+      "tags": [
+        "count",
+        "count_50",
+        "probability"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": "Soft constraint — not proven, multiple candidates possible"
+      "notes": "Soft constraint — not proven, multiple candidates possible",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "CSP model: count 50 with probability 0.42, reason: '50-ish and 57 is too much'"
+      ]
     },
     {
       "claim_id": "CLM-0004",
@@ -61,10 +89,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["count", "count_49", "probability"],
+      "tags": [
+        "count",
+        "count_49",
+        "probability"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "CSP model: count 49 with probability 0.23, reason: 'just under 50'"
+      ]
     },
     {
       "claim_id": "CLM-0005",
@@ -76,11 +112,24 @@
       "evidence": "Tail simulator: CHAR_MIRROR candidate with 55.8% probability, supported by bc_char(3.5), xy_mirror(3.2), appearance_copy_seen(3.0)",
       "status": "active",
       "contradicts": [],
-      "supported_by": ["CLM-0007", "CLM-0008"],
-      "tags": ["character_mirror", "tail", "appearance", "bc", "xy"],
+      "supported_by": [
+        "CLM-0007",
+        "CLM-0008"
+      ],
+      "tags": [
+        "character_mirror",
+        "tail",
+        "appearance",
+        "bc",
+        "xy"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": "Strongest tail candidate by simulation"
+      "notes": "Strongest tail candidate by simulation",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Tail simulator: CHAR_MIRROR candidate with 55.8% probability, supported by bc_char(3.5), xy_mirror(3.2), appearance_copy_seen(3.0)"
+      ]
     },
     {
       "claim_id": "CLM-0006",
@@ -93,10 +142,19 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["bc", "character_rule", "uppercase", "image_solution"],
+      "tags": [
+        "bc",
+        "character_rule",
+        "uppercase",
+        "image_solution"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Image analysis: 'bc (uppercase) = character rule (matches race/class)'"
+      ]
     },
     {
       "claim_id": "CLM-0007",
@@ -109,10 +167,19 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["xy", "mirror_rule", "lowercase", "image_solution"],
+      "tags": [
+        "xy",
+        "mirror_rule",
+        "lowercase",
+        "image_solution"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Image analysis: 'xy (lowercase) = mirror rule (mirrors partner)'"
+      ]
     },
     {
       "claim_id": "CLM-0008",
@@ -125,10 +192,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["character_mirror", "image_solution", "confirmed"],
+      "tags": [
+        "character_mirror",
+        "image_solution",
+        "confirmed"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Hint image 2 analysis: character mirroring pattern confirmed"
+      ]
     },
     {
       "claim_id": "CLM-0009",
@@ -141,10 +216,19 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["race", "unique", "targets", "any"],
+      "tags": [
+        "race",
+        "unique",
+        "targets",
+        "any"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Working notes: 'any race' and 'not unique' from evidence bank"
+      ]
     },
     {
       "claim_id": "CLM-0010",
@@ -157,10 +241,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["passive_blood_bar", "method", "blood_bar"],
+      "tags": [
+        "passive_blood_bar",
+        "method",
+        "blood_bar"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: passive_blood(1.5), working notes confirm passive Blood Bar involved"
+      ]
     },
     {
       "claim_id": "CLM-0011",
@@ -173,10 +265,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["manual_grip", "method", "clean_test"],
+      "tags": [
+        "manual_grip",
+        "method",
+        "clean_test"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: manual_grip(1.7), confirmed in final solution"
+      ]
     },
     {
       "claim_id": "CLM-0012",
@@ -189,10 +289,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["no_commands", "deprecated", "negative_constraint"],
+      "tags": [
+        "no_commands",
+        "deprecated",
+        "negative_constraint"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: no_commands(2.2), working notes confirm no commands"
+      ]
     },
     {
       "claim_id": "CLM-0013",
@@ -200,15 +308,23 @@
       "claim": "Volt/mode lock is not required for clean tests.",
       "type": "hard_constraint",
       "polarity": "negative",
-      "confidence": 0.80,
+      "confidence": 0.8,
       "evidence": "Evidence bank: no_mode(1.2), working notes confirm no mode needed",
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["no_mode", "volt", "negative_constraint"],
+      "tags": [
+        "no_mode",
+        "volt",
+        "negative_constraint"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: no_mode(1.2), working notes confirm no mode needed"
+      ]
     },
     {
       "claim_id": "CLM-0014",
@@ -216,15 +332,23 @@
       "claim": "Zombies do not need to act or do anything after conversion.",
       "type": "hard_constraint",
       "polarity": "positive",
-      "confidence": 0.80,
+      "confidence": 0.8,
       "evidence": "Evidence bank: zombie_do_nothing(1.6)",
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["zombie_action", "post_convert", "do_nothing"],
+      "tags": [
+        "zombie_action",
+        "post_convert",
+        "do_nothing"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: zombie_do_nothing(1.6)"
+      ]
     },
     {
       "claim_id": "CLM-0015",
@@ -237,10 +361,18 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["items", "accessories", "negative_constraint"],
+      "tags": [
+        "items",
+        "accessories",
+        "negative_constraint"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-21T00:00:00Z",
-      "notes": ""
+      "notes": "",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Evidence bank: items_not_needed(2.2)"
+      ]
     },
     {
       "claim_id": "CLM-0016",
@@ -253,10 +385,19 @@
       "status": "active",
       "contradicts": [],
       "supported_by": [],
-      "tags": ["count", "checkpoint", "milestone", "discovery"],
+      "tags": [
+        "count",
+        "checkpoint",
+        "milestone",
+        "discovery"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": "The actual count number is unknown; must be discovered"
+      "notes": "The actual count number is unknown; must be discovered",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Working notes: 'check 40 / 45 / 49 / 50' as checkpoint discovery"
+      ]
     },
     {
       "claim_id": "CLM-0017",
@@ -268,11 +409,24 @@
       "evidence": "SideCharacter update: 'copy/mirror character appearance + plus same-gender final zombify/check while the mirror relation is active'",
       "status": "active",
       "contradicts": [],
-      "supported_by": ["CLM-0005", "CLM-0006", "CLM-0007"],
-      "tags": ["tail", "character_mirror", "final_step", "mirror_active"],
+      "supported_by": [
+        "CLM-0005",
+        "CLM-0006",
+        "CLM-0007"
+      ],
+      "tags": [
+        "tail",
+        "character_mirror",
+        "final_step",
+        "mirror_active"
+      ],
       "created_at": "2026-05-22T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": "Character mirror is activated during tail, not after count"
+      "notes": "Character mirror is activated during tail, not after count",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "SideCharacter update: 'copy/mirror character appearance + plus same-gender final zombify/check while the mirror relation is active'"
+      ]
     },
     {
       "claim_id": "CLM-0099",
@@ -284,11 +438,22 @@
       "evidence": "Hypothesis OLD_MULTI_REROLL status: ruled_out; one_reroll evidence weight 3.0",
       "status": "deprecated",
       "contradicts": [],
-      "supported_by": ["CLM-0001"],
-      "tags": ["two_reroll", "deprecated", "multi_reroll", "broken"],
+      "supported_by": [
+        "CLM-0001"
+      ],
+      "tags": [
+        "two_reroll",
+        "deprecated",
+        "multi_reroll",
+        "broken"
+      ],
       "created_at": "2026-05-21T00:00:00Z",
       "updated_at": "2026-05-22T00:00:00Z",
-      "notes": "Deprecated — hard constraint now enforces exactly one reroll"
+      "notes": "Deprecated — hard constraint now enforces exactly one reroll",
+      "source_entity_ids": [],
+      "quote_spans": [
+        "Hypothesis OLD_MULTI_REROLL status: ruled_out; one_reroll evidence weight 3.0"
+      ]
     }
   ],
   "stats": {

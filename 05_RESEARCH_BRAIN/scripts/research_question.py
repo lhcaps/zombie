@@ -111,13 +111,16 @@ def _step_evidence_pack(
     db_path: Path,
     out_dir: Path,
     max_chunks: int = 40,
+    seed: int | None = None,
 ) -> Path:
     from build_evidence_pack import build_evidence_pack, _pack_to_markdown
 
     print(f"\n[STEP 4] Building evidence pack...")
     print(f"  Question: {question[:80]}")
+    if seed is not None:
+        print(f"  Seed: {seed} (deterministic mode)")
 
-    pack = build_evidence_pack(question, db_path, max_chunks=max_chunks)
+    pack = build_evidence_pack(question, db_path, max_chunks=max_chunks, seed=seed)
     pack_id = pack["pack_id"]
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -128,8 +131,11 @@ def _step_evidence_pack(
     md_path.write_text(_pack_to_markdown(pack), encoding="utf-8")
 
     print(f"  Pack ID: {pack_id}")
-    print(f"  Chunks: {pack['retrieval']['final_chunks']}")
-    print(f"  Queries: {len(pack['retrieval']['expanded_queries'])}")
+    print(f"  Chunks: {pack['retrieval']['final_chunks']} "
+          f"({pack['retrieval'].get('positive_chunks', '?')} positive + "
+          f"{pack['retrieval'].get('negative_chunks', '?')} negative)")
+    print(f"  Queries: {len(pack['retrieval'].get('positive_queries', []))} positive + "
+          f"{len(pack['retrieval'].get('negative_queries', []))} negative")
     print(f"  Coverage: {pack['coverage']}")
     print(f"  JSON: {json_path}")
     print(f"  Markdown: {md_path}")
@@ -154,13 +160,22 @@ def _step_generate_hypotheses(
     pack_path: Path,
     out_dir: Path,
     add_to_board: bool = False,
+    board_list: str | None = None,
+    idempotency_key: str | None = None,
 ) -> Path:
     from generate_hypotheses_from_claims import generate_hypotheses
 
     print(f"\n[STEP 6] Generating hypotheses from evidence...")
+    if idempotency_key:
+        print(f"  Idempotency key: {idempotency_key}")
 
     hyp_path = out_dir / f"hypotheses_{pack_path.stem}.json"
-    hyps = generate_hypotheses(question, pack_path, hyp_path, add_to_board=add_to_board)
+    hyps = generate_hypotheses(
+        question, pack_path, hyp_path,
+        add_to_board=add_to_board,
+        board_list=board_list,
+        idempotency_key=idempotency_key,
+    )
 
     print(f"  Generated: {len(hyps)} hypotheses")
     for h in hyps[:3]:
@@ -192,14 +207,23 @@ def run_full_pipeline(
     add_to_board: bool = False,
     max_chunks: int = 40,
     top_k: int = 30,
+    seed: int | None = None,
+    dry_run: bool = False,
+    board_list: str = "Research Output",
+    idempotency_key: str | None = None,
 ) -> dict:
     manifest = _step_normalize(raw_path, paths["entities"], paths["manifest"])
     _step_index(paths["entities"], paths["db"], rebuild=rebuild_index)
 
     results = _step_search(paths["db"], question, top_k)
-    pack_path = _step_evidence_pack(question, paths["db"], EVIDENCE_DIR, max_chunks)
+    pack_path = _step_evidence_pack(question, paths["db"], EVIDENCE_DIR, max_chunks, seed)
     claims_path = _step_extract_claims(pack_path, EVIDENCE_DIR)
-    hyp_path = _step_generate_hypotheses(question, pack_path, EVIDENCE_DIR, add_to_board)
+    hyp_path = _step_generate_hypotheses(
+        question, pack_path, EVIDENCE_DIR,
+        add_to_board=add_to_board and not dry_run,
+        board_list=board_list if not dry_run else None,
+        idempotency_key=idempotency_key,
+    )
 
     return {
         "question": question,
@@ -208,6 +232,8 @@ def run_full_pipeline(
         "pack_path": str(pack_path),
         "claims_path": str(claims_path),
         "hypotheses_path": str(hyp_path),
+        "dry_run": dry_run,
+        "seed": seed,
     }
 
 
@@ -218,17 +244,34 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Full pipeline with new Trello file:
-  python research_question.py --question "two unknown steps after gender reroll" --raw-trello ../trello.txt --pipeline all
+    # Search only (fast, needs existing index):
+    python research_question.py --question "zombie blood grip" --search-only
 
-  # Search only (fast, needs existing index):
-  python research_question.py --question "zombie blood grip" --search-only
+    # Build/update index:
+    python research_question.py --build-index --raw-trello ../trello.txt
 
-  # Build/update index:
-  python research_question.py --build-index --raw-trello ../trello.txt
+    # Full pipeline (dry-run, no board mutation):
+    python research_question.py \
+        --question "Resolve the two unknown steps after gender reroll" \
+        --raw-trello ../trello.txt \
+        --pipeline all \
+        --dry-run \
+        --idempotency-key EPACK-001
 
-  # Use existing evidence pack:
-  python research_question.py --question "..." --evidence-pack ../evidence_packs/EPACK-001.json --pipeline all
+    # Full pipeline with board write (idempotent):
+    python research_question.py \
+        --question "Resolve the two unknown steps after gender reroll" \
+        --raw-trello ../trello.txt \
+        --pipeline all \
+        --add-to-board \
+        --idempotency-key EPACK-001 \
+        --board-list "Research Output"
+
+    # Deterministic run for reproducibility:
+    python research_question.py \
+        --question "zombie zombify blood grip charred" \
+        --pipeline retrieve \
+        --seed 42
         """,
     )
     parser.add_argument(
@@ -266,7 +309,29 @@ Examples:
     parser.add_argument(
         "--add-to-board",
         action="store_true",
-        help="Add generated hypotheses to hypothesis_board.json"
+        help="Add generated hypotheses to hypothesis_board.json (requires --idempotency-key)"
+    )
+    parser.add_argument(
+        "--board-list",
+        default="Research Output",
+        help="Trello list name for board mutation (default: 'Research Output')"
+    )
+    parser.add_argument(
+        "--idempotency-key",
+        help="Unique key for idempotent board writing (e.g. EPACK-2ISH-001). "
+             "Prevents duplicate entries on re-runs."
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Run pipeline but do NOT write to hypothesis_board.json. "
+             "Use this to validate output before committing."
+    )
+    parser.add_argument(
+        "--write-pack",
+        action="store_true",
+        help="Write evidence pack to disk (default: true). "
+             "Use --no-write-pack to skip writing."
     )
     parser.add_argument(
         "--max-chunks", "-m", type=int, default=40,
@@ -277,11 +342,20 @@ Examples:
         help="Results per search query (default: 30)"
     )
     parser.add_argument(
+        "--seed", type=int,
+        help="Random seed for deterministic chunk selection. "
+             "Same seed + same question = identical evidence pack."
+    )
+    parser.add_argument(
         "--search-only",
         action="store_true",
         help="Just search the existing index, don't build pack or generate hypotheses"
     )
     args = parser.parse_args()
+
+    if args.add_to_board and not args.idempotency_key:
+        sys.stderr.write("[ERROR] --add-to-board requires --idempotency-key\n")
+        sys.exit(1)
 
     _print_banner()
 
@@ -322,6 +396,10 @@ Examples:
         if raw_path:
             print(f"Running full pipeline for question:")
             print(f"  {args.question}")
+            if args.dry_run:
+                print(f"  [DRY RUN] No board mutations will be written")
+            if args.idempotency_key:
+                print(f"  Idempotency key: {args.idempotency_key}")
             result = run_full_pipeline(
                 args.question or "Unknown",
                 raw_path,
@@ -330,12 +408,18 @@ Examples:
                 add_to_board=args.add_to_board,
                 max_chunks=args.max_chunks,
                 top_k=args.top_k,
+                seed=args.seed,
+                dry_run=args.dry_run,
+                board_list=args.board_list,
+                idempotency_key=args.idempotency_key,
             )
             print(f"\n{'=' * 70}")
             print(f"  Pipeline complete!")
             print(f"  Evidence pack: {result['pack_path']}")
             print(f"  Claims: {result['claims_path']}")
             print(f"  Hypotheses: {result['hypotheses_path']}")
+            if args.dry_run:
+                print(f"  [DRY RUN] No board was mutated")
         elif args.evidence_pack:
             from build_evidence_pack import build_evidence_pack
             pack_path = Path(args.evidence_pack)
@@ -346,7 +430,10 @@ Examples:
                 _step_extract_claims(pack_path, EVIDENCE_DIR)
                 _step_generate_hypotheses(
                     args.question or "Research question",
-                    pack_path, EVIDENCE_DIR, args.add_to_board
+                    pack_path, EVIDENCE_DIR,
+                    add_to_board=args.add_to_board and not args.dry_run,
+                    board_list=args.board_list if not args.dry_run else None,
+                    idempotency_key=args.idempotency_key,
                 )
             print("\n[OK] Pipeline complete")
         return

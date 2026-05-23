@@ -129,7 +129,21 @@ def _build_claims(
     raw_claims: list[dict],
     source_prefix: str,
     existing_claims: list[dict],
+    chunks: list[dict],
 ) -> list[dict]:
+    # Build lookup: text snippet -> entity_id for quote tracing
+    text_to_entity: dict[str, str] = {}
+    entity_by_card: dict[str, list[str]] = {}
+    for chunk in chunks:
+        eid = chunk.get("entity_id", "")
+        card = chunk.get("card_name", "")
+        text = chunk.get("text", "")
+        if eid:
+            text_to_entity[text[:100]] = eid
+            if card not in entity_by_card:
+                entity_by_card[card] = []
+            entity_by_card[card].append(eid)
+
     new_claims = []
     for item in raw_claims:
         claim_text = item.get("claim", "")
@@ -144,6 +158,29 @@ def _build_claims(
         if claim_type not in _CLAIM_TYPES:
             claim_type = "observation"
 
+        # Trace entity IDs from chunks that contain claim-relevant text
+        source_entity_ids: list[str] = []
+        quote_spans: list[str] = []
+        claim_lower = claim_text.lower()
+        for chunk in chunks:
+            chunk_text = chunk.get("text", "").lower()
+            eid = chunk.get("entity_id", "")
+            # Simple overlap: if claim keywords appear in chunk text
+            keywords = [w for w in claim_lower.split() if len(w) > 4]
+            overlap = sum(1 for kw in keywords if kw in chunk_text)
+            if overlap >= 2 and eid and eid not in source_entity_ids:
+                source_entity_ids.append(eid)
+                # Extract a quote span: find the matching text snippet
+                for kw in keywords[:3]:
+                    idx = chunk.get("text", "").lower().find(kw)
+                    if idx >= 0:
+                        start = max(0, idx - 30)
+                        end = min(len(chunk.get("text", "")), idx + len(kw) + 30)
+                        span = chunk.get("text", "")[start:end].strip()
+                        if span not in quote_spans:
+                            quote_spans.append(span)
+                        break
+
         claim_id = next_claim_id(existing_claims + new_claims)
         new_claims.append({
             "claim_id": claim_id,
@@ -153,6 +190,8 @@ def _build_claims(
             "polarity": item.get("polarity", "neutral"),
             "confidence": min(1.0, max(0.0, float(item.get("confidence", 0.5)))),
             "evidence": item.get("evidence", ""),
+            "source_entity_ids": source_entity_ids,
+            "quote_spans": quote_spans,
             "status": "pending_review",
             "contradicts": [],
             "supported_by": [],
@@ -245,7 +284,7 @@ Only output the JSON array. No explanation needed.
         return _heuristic_extract(pack, existing_claims)
 
     raw_claims = _parse_claims_from_llm_response(response, pack.get("pack_id", "EPACK-UNKNOWN"), existing_claims)
-    return _build_claims(raw_claims, pack.get("pack_id", "EPACK-UNKNOWN"), existing_claims)
+    return _build_claims(raw_claims, pack.get("pack_id", "EPACK-UNKNOWN"), existing_claims, pack.get("chunks", []))
 
 
 def _heuristic_extract(pack: dict, existing_claims: list[dict]) -> list[dict]:
@@ -274,6 +313,8 @@ def _heuristic_extract(pack: dict, existing_claims: list[dict]) -> list[dict]:
         for pattern, ctype, confidence, tag in patterns:
             if pattern.lower() in text.lower():
                 claim_text = f"{source}: pattern '{tag}' found in card description"
+                # Minimal entity tracing for heuristic claims
+                entity_ids = [chunk.get("entity_id", "")] if chunk.get("entity_id") else []
                 claim_id = next_claim_id(existing_claims + new_claims)
                 new_claims.append({
                     "claim_id": claim_id,
@@ -283,6 +324,8 @@ def _heuristic_extract(pack: dict, existing_claims: list[dict]) -> list[dict]:
                     "polarity": "neutral",
                     "confidence": confidence,
                     "evidence": f"Pattern match in {card_name}: {text[:200]}",
+                    "source_entity_ids": entity_ids,
+                    "quote_spans": [text[:200]] if text else [],
                     "status": "pending_review",
                     "contradicts": [],
                     "supported_by": [],

@@ -17,10 +17,29 @@ import re
 import sqlite3
 import sys
 import io
+import random
 from datetime import datetime, timezone
 from pathlib import Path
 
 from core import RB_DIR
+
+
+# --- FTS5 query escaping ---
+_FTS_SPECIAL_RE = re.compile(r'["\-:\*\(\)\^]')
+
+
+def fts_quote(term: str) -> str:
+    term = term.strip().replace('"', '""')
+    return f'"{term}"'
+
+
+def build_or_query(terms: list[str]) -> str:
+    clean = [t for t in terms if t.strip()]
+    return " OR ".join(fts_quote(t) for t in clean)
+
+
+def _sanitize_fts_query(raw_query: str) -> str:
+    return _FTS_SPECIAL_RE.sub(" ", raw_query)
 
 
 _DEFAULT_TOPIC_QUERIES = {
@@ -56,14 +75,50 @@ _DEFAULT_TOPIC_QUERIES = {
     ],
 }
 
+# Negative evidence: searches for failed tests, contradictions, and exclusions.
+# These MUST be included alongside positive evidence to prevent pro-confirmation bias.
+_NEGATIVE_TOPIC_QUERIES = {
+    "failed_tests": [
+        "failed test fail route wrong broken glitch",
+        "impossible not possible doesn't work",
+        "doesn't require not needed unnecessary",
+    ],
+    "gender_exclusions": [
+        "opposite gender cross gender diff gender",
+        "no gender change reroll not required",
+        "male female partner different",
+    ],
+    "mechanic_exclusions": [
+        "no volt no mode no bankai",
+        "not zombie not undead",
+        "no commands no return no die",
+        "balance unchanged NPC same no change",
+    ],
+    "contradictions": [
+        "contradicts contradicts evidence wrong",
+        "disproven disproved debunked",
+        "tested tried attempted route",
+    ],
+}
 
-def _query_expand(question: str) -> list[str]:
-    expansions = []
+
+def _query_expand(question: str) -> tuple[list[str], list[str]]:
+    """
+    Expand a question into positive and negative search queries.
+    Returns (positive_queries, negative_queries).
+    Negative queries retrieve failed tests, contradictions, and exclusions
+    to prevent pro-confirmation bias in the evidence pack.
+    """
+    expansions: list[str] = []
+    neg_expansions: list[str] = []
     q_lower = question.lower()
     if any(kw in q_lower for kw in ["zombie", "zombify", "blood", "grip", "charred"]):
         expansions.extend(_DEFAULT_TOPIC_QUERIES["zombie_candidates"])
+        neg_expansions.extend(_NEGATIVE_TOPIC_QUERIES["mechanic_exclusions"])
+        neg_expansions.extend(_NEGATIVE_TOPIC_QUERIES["failed_tests"])
     if any(kw in q_lower for kw in ["gender", "appearance", "copy", "mirror", "vanity", "reroll"]):
         expansions.extend(_DEFAULT_TOPIC_QUERIES["gender_appearance"])
+        neg_expansions.extend(_NEGATIVE_TOPIC_QUERIES["gender_exclusions"])
     if any(kw in q_lower for kw in ["t g z x c", "key", "critical", "passive", "mode", "overdrive"]):
         expansions.extend(_DEFAULT_TOPIC_QUERIES["ability_keys"])
     if any(kw in q_lower for kw in ["grip", "grab", "execute", "knocked"]):
@@ -75,21 +130,27 @@ def _query_expand(question: str) -> list[str]:
     if not expansions:
         terms = [t for t in re.split(r"[\s,.!?;:'\"()]+", q_lower) if len(t) > 2]
         expansions.append(" ".join(terms[:12]))
+
     seen = set()
-    unique = []
+    unique_pos, unique_neg = [], []
     for e in expansions:
         if e not in seen:
             seen.add(e)
-            unique.append(e)
-    return unique
+            unique_pos.append(e)
+    for e in neg_expansions:
+        if e not in seen:
+            seen.add(e)
+            unique_neg.append(e)
+    return unique_pos, unique_neg
 
 
 def _fts_search(conn: sqlite3.Connection, query: str, top_k: int) -> list[dict]:
     results: list[dict] = []
 
-    # FTS5: convert space-separated terms to OR-separated for better recall
-    terms = [t.strip() for t in query.split() if t.strip()]
-    fts_query = " OR ".join(f'"{t}"' for t in terms) if terms else query
+    # Safely escape and convert space-separated terms to OR-separated FTS5 query
+    safe_query = _sanitize_fts_query(query)
+    terms = [t.strip() for t in safe_query.split() if t.strip()]
+    fts_query = build_or_query(terms) if terms else query
 
     try:
         cursor = conn.execute("""
@@ -237,20 +298,35 @@ def build_evidence_pack(
     db_path: Path,
     max_chunks: int = 40,
     top_k_per_query: int = 30,
+    negative_top_k: int = 10,
+    seed: int | None = None,
 ) -> dict:
+    if seed is not None:
+        random.seed(seed)
+
     conn = sqlite3.connect(str(db_path))
     conn.row_factory = sqlite3.Row
 
     manifest = dict(conn.execute("SELECT key, value FROM trello_manifest").fetchall())
     source_sha256 = manifest.get("source_sha256", "")
 
-    queries = _query_expand(question)
-    print(f"  Expanding question into {len(queries)} queries...")
+    pos_queries, neg_queries = _query_expand(question)
+    print(f"  Expanding question into {len(pos_queries)} positive + {len(neg_queries)} negative queries...")
 
     all_results: list[dict] = []
-    for q in queries:
+    for q in pos_queries:
         results = _fts_search(conn, q, top_k_per_query)
         all_results.extend(results)
+
+    # Fetch negative evidence for bias prevention
+    negative_chunks: list[dict] = []
+    neg_entity_ids: set[str] = set()
+    for q in neg_queries:
+        results = _fts_search(conn, q, negative_top_k)
+        for r in results:
+            if r["entity_id"] not in neg_entity_ids:
+                neg_entity_ids.add(r["entity_id"])
+                negative_chunks.append(r)
 
     conn.close()
 
@@ -263,10 +339,24 @@ def build_evidence_pack(
         r["combined_score"] = weight * (1.0 / (1.0 + rank * 0.01))
 
     all_results.sort(key=lambda x: x["combined_score"], reverse=True)
-    all_results = all_results[:max_chunks]
 
-    chunks = []
-    for i, r in enumerate(all_results):
+    # Split budget: 80% positive, 20% negative evidence
+    pos_budget = int(max_chunks * 0.8)
+    neg_budget = max_chunks - pos_budget
+    pos_selected = all_results[:pos_budget]
+    neg_selected = negative_chunks[:neg_budget]
+
+    matched_queries_map: dict[str, list[str]] = {}
+    for r in pos_selected + neg_selected:
+        q = r.get("search_query", "")
+        eid = r["entity_id"]
+        if eid not in matched_queries_map:
+            matched_queries_map[eid] = []
+        if q:
+            matched_queries_map[eid].append(q)
+
+    chunks: list[dict] = []
+    for i, r in enumerate(pos_selected):
         chunks.append({
             "chunk_id": f"chunk_{i:04d}",
             "entity_id": r["entity_id"],
@@ -279,6 +369,35 @@ def build_evidence_pack(
             "evidence_weight": r.get("evidence_weight", 0.5),
             "combined_score": r.get("combined_score", 0.0),
             "search_query": r.get("search_query", ""),
+            "matched_queries": matched_queries_map.get(r["entity_id"], []),
+            "why_selected": (
+                f"Top-{i + 1} positive result for query '{r.get('search_query', '')}' "
+                f"with bm25_rank={r.get('rank', 0):.2f}, "
+                f"weight={r.get('evidence_weight', 0.5):.2f}, "
+                f"combined={r.get('combined_score', 0):.4f}"
+            ),
+            "is_negative_evidence": False,
+        })
+
+    for j, r in enumerate(neg_selected):
+        chunks.append({
+            "chunk_id": f"chunk_{pos_budget + j:04d}",
+            "entity_id": r["entity_id"],
+            "entity_type": r["entity_type"],
+            "card_name": r.get("card_name", ""),
+            "list_name": r.get("list_name", ""),
+            "section": r.get("section", ""),
+            "text": _build_chunk_text(r),
+            "url": r.get("url", ""),
+            "evidence_weight": r.get("evidence_weight", 0.5),
+            "combined_score": r.get("combined_score", 0.0),
+            "search_query": r.get("search_query", ""),
+            "matched_queries": matched_queries_map.get(r["entity_id"], []),
+            "why_selected": (
+                f"NEGATIVE evidence (contradiction/failure/exclusion) for query '{r.get('search_query', '')}' "
+                f"to prevent pro-confirmation bias in hypothesis generation"
+            ),
+            "is_negative_evidence": True,
         })
 
     pack = {
@@ -291,11 +410,16 @@ def build_evidence_pack(
             "db_path": str(db_path.resolve()),
         },
         "retrieval": {
-            "expanded_queries": queries,
+            "positive_queries": pos_queries,
+            "negative_queries": neg_queries,
             "total_candidates": len(all_results),
+            "positive_chunks": len(pos_selected),
+            "negative_chunks": len(neg_selected),
             "final_chunks": len(chunks),
             "max_chunks": max_chunks,
             "top_k_per_query": top_k_per_query,
+            "negative_top_k": negative_top_k,
+            "seed": seed,
         },
         "coverage": {
             "trello_zombie": any(
@@ -337,14 +461,21 @@ def _pack_to_markdown(pack: dict) -> str:
         "",
         f"**Source SHA256:** `{pack['source']['sha256'][:16]}...`",
         "",
-        f"## Retrieval Queries ({len(pack['retrieval']['expanded_queries'])})",
+        f"## Positive Retrieval Queries ({len(pack['retrieval']['positive_queries'])})",
     ]
-    for i, q in enumerate(pack["retrieval"]["expanded_queries"], 1):
+    for i, q in enumerate(pack["retrieval"]["positive_queries"], 1):
         lines.append(f"  {i}. `{q}`")
+
+    neg_qs = pack["retrieval"].get("negative_queries", [])
+    if neg_qs:
+        lines.extend(["", f"## Negative Evidence Queries ({len(neg_qs)}) — contradictions & exclusions"])
+        for i, q in enumerate(neg_qs, 1):
+            lines.append(f"  {i}. `{q}`")
 
     lines.extend(["", f"## Evidence Chunks ({len(pack['chunks'])})", ""])
     for chunk in pack["chunks"]:
-        lines.append(f"### [{chunk['chunk_id']}] {chunk['card_name'] or chunk['entity_id']}")
+        prefix = "[NEG] " if chunk.get("is_negative_evidence") else ""
+        lines.append(f"### {prefix}[{chunk['chunk_id']}] {chunk['card_name'] or chunk['entity_id']}")
         meta = []
         if chunk["list_name"]:
             meta.append(f"List: *{chunk['list_name']}*")
@@ -355,12 +486,16 @@ def _pack_to_markdown(pack: dict) -> str:
         meta.append(f"Score: {chunk['combined_score']:.4f}")
         if chunk.get("url"):
             meta.append(f"URL: {chunk['url']}")
+        if chunk.get("is_negative_evidence"):
+            meta.append("**NEGATIVE EVIDENCE**")
         lines.append("  " + " | ".join(meta))
         lines.append("")
         lines.append(f"```")
         lines.append(chunk["text"])
         lines.append(f"```")
         lines.append(f"Query: `{chunk['search_query']}`")
+        if chunk.get("why_selected"):
+            lines.append(f"Why selected: {chunk['why_selected']}")
         lines.append("")
         lines.append("---")
         lines.append("")
@@ -379,6 +514,14 @@ def main() -> None:
     parser.add_argument("--markdown", help="Also write markdown version here")
     parser.add_argument("--max-chunks", "-m", type=int, default=40)
     parser.add_argument("--top-k", "-k", type=int, default=30)
+    parser.add_argument(
+        "--negative-top-k", type=int, default=10,
+        help="Max negative evidence chunks per negative query (default: 10)"
+    )
+    parser.add_argument(
+        "--seed", type=int,
+        help="Random seed for deterministic chunk selection (default: none)"
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -392,6 +535,8 @@ def main() -> None:
         args.question, db_path,
         max_chunks=args.max_chunks,
         top_k_per_query=args.top_k,
+        negative_top_k=args.negative_top_k,
+        seed=args.seed,
     )
 
     out_path = Path(args.out)
@@ -399,7 +544,9 @@ def main() -> None:
     out_path.write_text(json.dumps(pack, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"[OK] Wrote pack to: {out_path}")
     print(f"  Pack ID: {pack['pack_id']}")
-    print(f"  Chunks: {pack['retrieval']['final_chunks']}")
+    print(f"  Chunks: {pack['retrieval']['final_chunks']} "
+          f"({pack['retrieval']['positive_chunks']} positive + "
+          f"{pack['retrieval']['negative_chunks']} negative)")
     print(f"  Coverage: {pack['coverage']}")
 
     if args.markdown:

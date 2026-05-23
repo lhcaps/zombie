@@ -49,7 +49,8 @@ def _init_db(db_path: Path, rebuild: bool = False) -> sqlite3.Connection:
             source_sha256 TEXT,
             evidence_weight REAL DEFAULT 0.5,
             updated_at TEXT,
-            metadata_json TEXT
+            metadata_json TEXT,
+            searchable INTEGER DEFAULT 1
         )
     """)
 
@@ -106,16 +107,20 @@ def _insert_entity(conn: sqlite3.Connection, entity: dict) -> None:
             "entity_id", "entity_type", "board_id", "board_name",
             "list_id", "list_name", "card_id", "card_name",
             "title", "text", "url", "source_path", "source_sha256",
-            "evidence_weight", "updated_at",
+            "evidence_weight", "updated_at", "searchable",
         )
     }
+
+    text = entity.get("text", "") or ""
+    # Only index in FTS if text is non-empty and long enough
+    searchable = 1 if (text and len(text.strip()) > 10) else 0
 
     conn.execute("""
         INSERT OR REPLACE INTO trello_entities
         (entity_id, entity_type, board_id, board_name, list_id, list_name,
          card_id, card_name, title, text, url, source_path, source_sha256,
-         evidence_weight, updated_at, metadata_json)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         evidence_weight, updated_at, metadata_json, searchable)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         entity.get("entity_id"),
         entity.get("entity_type"),
@@ -126,13 +131,14 @@ def _insert_entity(conn: sqlite3.Connection, entity: dict) -> None:
         entity.get("card_id"),
         entity.get("card_name"),
         entity.get("title") or entity.get("card_name", ""),
-        entity.get("text", ""),
+        text,
         entity.get("url", ""),
         entity.get("source_path", ""),
         entity.get("source_sha256", ""),
         entity.get("evidence_weight", 0.5),
         entity.get("updated_at", ""),
         json.dumps(metadata) if metadata else None,
+        searchable,
     ))
 
 
@@ -142,7 +148,7 @@ def _rebuild_fts(conn: sqlite3.Connection) -> None:
         INSERT INTO trello_fts(entity_id, entity_type, list_name, card_name, title, text)
         SELECT entity_id, entity_type, list_name, card_name, title, text
         FROM trello_entities
-        WHERE text IS NOT NULL AND text != ''
+        WHERE searchable = 1
     """)
     conn.commit()
 
@@ -215,6 +221,7 @@ def index_entities(
         "source_sha256": source_sha256,
         "total_entities": len(entities),
         "entity_counts": entity_counts,
+        "searchable_entities": sum(1 for e in entities if e.get("text", "") and len((e.get("text", "") or "").strip()) > 10),
     }
     _update_manifest(conn, stats)
 
@@ -224,6 +231,9 @@ def index_entities(
     fts_row = conn.execute(
         "SELECT COUNT(*) FROM trello_fts"
     ).fetchone()
+    searchable_row = conn.execute(
+        "SELECT COUNT(*) FROM trello_entities WHERE searchable = 1"
+    ).fetchone()
 
     conn.close()
 
@@ -231,6 +241,7 @@ def index_entities(
         **stats,
         "db_entities_indexed": row[0] if row else 0,
         "fts_entries": fts_row[0] if fts_row else 0,
+        "searchable_entities": searchable_row[0] if searchable_row else stats.get("searchable_entities", 0),
     }
 
 
