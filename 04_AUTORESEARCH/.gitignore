@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.pt
+*.ckpt
+run.log
+results.tsv
+*.tmp
+.cache/
+data/
+tokenizer/
