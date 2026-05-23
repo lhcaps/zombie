@@ -62,6 +62,7 @@ class GpuProfile:
     checkpoint_modes: tuple[bool, ...]
     default_checkpointing: bool
     eval_batch_cap: int = 16
+    skip_autotune: bool = False  # skip autotune entirely (e.g., bf16 backward dtype issue on Windows)
 
 
 SUPPORTED_CONSUMER_CAPABILITIES = {
@@ -135,14 +136,14 @@ def _resolve_gpu_profile(gpu_name, capability, gpu_vram_gb, is_windows):
     )
 
     if supported_consumer:
-        if arch == "turing" and gpu_vram_gb < 12.0:
+        if gpu_vram_gb < 11.5:
             return GpuProfile(
                 name=f"{arch}-8-11gb",
                 is_supported_consumer=True,
                 is_compatibility_only=False,
                 train_batch_candidates=(8, 4, 2, 1),
-                checkpoint_modes=(True,),
-                default_checkpointing=True,
+                checkpoint_modes=(False,),  # no checkpointing on small VRAM
+                default_checkpointing=False,
                 eval_batch_cap=4,
             )
         if gpu_vram_gb < 16.0:
@@ -152,8 +153,9 @@ def _resolve_gpu_profile(gpu_name, capability, gpu_vram_gb, is_windows):
                 is_supported_consumer=True,
                 is_compatibility_only=False,
                 train_batch_candidates=(16, 8, 4),
-                checkpoint_modes=(True,),
-                default_checkpointing=True,
+                checkpoint_modes=(False,),  # disable checkpointing (bf16 + checkpoint dtype mismatch on Windows)
+                default_checkpointing=False,
+                skip_autotune=True,  # bf16 backward dtype issue in autotune probe on Windows
             )
         if gpu_vram_gb < 24.0:
             return GpuProfile(
@@ -436,7 +438,7 @@ class Block(nn.Module):
     def forward(self, x, ve, cos_sin, window_size):
         x = x + self.attn(norm(x), ve, cos_sin, window_size)
         x = x + self.mlp(norm(x))
-        return x
+        return x.to(dtype=x.dtype)
 
 
 class GPT(nn.Module):
@@ -511,7 +513,7 @@ class GPT(nn.Module):
         long_window = config.sequence_len
         short_window = long_window // 2
         char_to_window = {"L": (long_window, 0), "S": (short_window, 0)}
-        window_sizes = []
+        window_sizes: list[tuple[int, int]] = []
         for layer_idx in range(config.n_layer):
             char = pattern[layer_idx % len(pattern)]
             window_sizes.append(char_to_window[char])
@@ -935,10 +937,18 @@ def _benchmark_train_candidate(runtime, tokenizer, vocab_size, train_batch_size,
     except torch.cuda.OutOfMemoryError:
         return None
     except RuntimeError as exc:
-        print(
-            f"Autotune candidate rejected "
-            f"(batch_size={train_batch_size}, checkpointing={'on' if use_checkpointing else 'off'}): {exc}"
-        )
+        msg = str(exc)
+        if "expected dtype struct c10::BFloat16" in msg or "got dtype float" in msg:
+            print(
+                f"Autotune candidate rejected "
+                f"(batch_size={train_batch_size}, checkpointing={'on' if use_checkpointing else 'off'}): "
+                f"bf16 backward dtype mismatch (known Windows RTX issue)"
+            )
+        else:
+            print(
+                f"Autotune candidate rejected "
+                f"(batch_size={train_batch_size}, checkpointing={'on' if use_checkpointing else 'off'}): {exc}"
+            )
         return None
     finally:
         del x, y, train_loader, optimizer, model
@@ -948,6 +958,9 @@ def _benchmark_train_candidate(runtime, tokenizer, vocab_size, train_batch_size,
 
 def _autotune_train_candidate(runtime, tokenizer, vocab_size, train_candidates):
     if not runtime.gpu_profile.is_supported_consumer:
+        return None
+    if runtime.gpu_profile.skip_autotune:
+        print("Autotune skipped for this GPU profile (bf16 backward dtype issue).")
         return None
     if os.environ.get("AUTORESEARCH_DISABLE_AUTOTUNE", "0") == "1":
         print("Autotune disabled by AUTORESEARCH_DISABLE_AUTOTUNE=1.")
