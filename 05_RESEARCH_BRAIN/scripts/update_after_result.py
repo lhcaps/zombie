@@ -91,10 +91,17 @@ def update_beliefs(run_id: str, interactive: bool = False) -> None:
     board = load_json(hypothesis_board_path())
     ledger = load_json(claim_ledger_path())
 
-    # Find and update hypothesis
+    # Find hypothesis
     hyp = next((h for h in board.get("hypotheses", []) if h["hypothesis_id"] == hyp_id), None)
     if not hyp:
         warn(f"Hypothesis not found: {hyp_id}")
+        return
+
+    # Idempotency guard — skip if this run_id was already applied
+    applied = hyp.get("applied_run_ids", [])
+    if run_id in applied:
+        warn(f"Run {run_id} already applied to {hyp_id} — skipping (idempotent)")
+        ok("Belief update skipped (already applied)")
         return
 
     old_likelihood, new_likelihood, reasoning = _apply_bayesian_update(hyp, outcome)
@@ -118,6 +125,7 @@ def update_beliefs(run_id: str, interactive: bool = False) -> None:
     new_priority = new_likelihood * info_gain * constraint_fit / test_cost
     hyp["priority_score"] = round(new_priority, 4)
     hyp["updated_at"] = utc_now()
+    hyp.setdefault("applied_run_ids", []).append(run_id)
 
     print(f"\n  Hypothesis:  {hyp_id}")
     print(f"  Status:      {old_status} -> {hyp['status']}")

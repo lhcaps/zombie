@@ -53,6 +53,21 @@
     "notes": {
       "type": "string",
       "description": "Any additional notes about this source"
+    },
+    "source_role": {
+      "type": "string",
+      "enum": ["primary_evidence", "secondary_note", "derived_summary", "test_result"],
+      "description": "Role of this source in the evidence hierarchy. primary_evidence = raw observation, test_result = live game test output, secondary_note = human analysis, derived_summary = synthesis from other sources"
+    },
+    "evidence_weight": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Weight multiplier for confidence boosting from this source. Derived summaries default to 0.15, primary evidence defaults to 1.0"
+    },
+    "can_create_new_claims": {
+      "type": "boolean",
+      "description": "Whether this source can be used to generate new claims. Derived summaries should be false (avoid self-referential evidence)"
     }
   }
 }

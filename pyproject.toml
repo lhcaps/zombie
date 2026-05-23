@@ -1,0 +1,38 @@
+[project]
+name = "zombie-research-brain"
+version = "0.2.0"
+description = "Evidence-driven research engine for Zombie Quest"
+readme = "05_RESEARCH_BRAIN/README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.7",
+  "jsonschema>=4.22",
+  "python-dotenv>=1.0",
+  "rich>=13.7",
+  "typer>=0.12",
+  "orjson>=3.10",
+  "pypdf>=4.2",
+  "python-docx>=1.1",
+  "openai>=1.40",
+  "anthropic>=0.34",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2",
+  "ruff>=0.5",
+  "mypy>=1.10",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+warn_return_any = true
+warn_unused_ignores = true

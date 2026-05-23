@@ -47,9 +47,13 @@ from zombie_dispatcher import MultiAgentDispatcher
 from zombie_test_generator import CoverageTracker
 from zombie_tail_simulator import print_summary, score_candidates, write_reports
 
-
-OUT_DIR = Path(r"D:\Study\Project\zombie\03_TOOLS\zombie_test_runner")
-OUT_DIR.mkdir(parents=True, exist_ok=True)
+# --- Repo-relative path resolver ---
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+_OUT_DIR = Path(os.getenv(
+    "ZOMBIE_OUT_DIR",
+    str(_REPO_ROOT / "03_TOOLS" / "zombie_test_runner")
+))
+_OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def status_icon(status: str) -> str:
@@ -143,7 +147,7 @@ def cmd_report(args):
     results = load_results()
     engine = AnalysisEngine()
     report = engine.full_report(results)
-    report_path = OUT_DIR / f"analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+    report_path = _OUT_DIR / f"analysis_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
     report_path.write_text(report, encoding="utf-8")
     print(report)
     print(f"\nReport saved to: {report_path}")
@@ -191,7 +195,6 @@ def cmd_generate(tracker: CoverageTracker, args):
         }
         for c in tracker.all_cases()
     ]
-    path = OUT_DIR / "all_test_cases.json"
     path.write_text(json.dumps(cases_data, indent=2), encoding="utf-8")
     print(f"\nGenerated {len(cases_data)} updated test cases -> {path}")
 
@@ -229,10 +232,10 @@ def _build_rich_result(
     """Build a full Research Brain run_result dict."""
     outcome_upper = outcome.upper()  # already INCONCLUSIVE/PASS/FAIL from caller
     confidence = getattr(args, "confidence", "medium")
-    gender = getattr(args, "gender", parsed.get("gender", "?"))
+    gender = getattr(args, "gender", None) or parsed.get("gender", "?")
     race = getattr(args, "race", "?")
-    count_target = getattr(args, "count_target", parsed.get("amount", 50))
-    count_actual = getattr(args, "count_actual", count_target)
+    count_target = int(getattr(args, "count_target", None) or parsed.get("amount", 50) or 50)
+    count_actual = int(getattr(args, "count_actual", None) or count_target)
     npc_before = getattr(args, "npc_before", "")
     npc_after = getattr(args, "npc_after", "")
     balance_before = getattr(args, "balance_before", "")
@@ -246,7 +249,11 @@ def _build_rich_result(
     server_type = getattr(args, "server_type", "private")
     world = getattr(args, "world", "base")
     mode_used = getattr(args, "mode_used", False)
-    commands_used = getattr(args, "commands_used", [])
+    commands_raw = getattr(args, "commands_used", "")
+    if isinstance(commands_raw, str):
+        commands_used = [x.strip() for x in commands_raw.split(",") if x.strip()]
+    else:
+        commands_used = list(commands_raw) if commands_raw else []
     grip_method = getattr(args, "grip_method", "manual")
     blood_bar_method = getattr(args, "blood_bar_method", "passive")
     mirror_active = getattr(args, "mirror_active", False)
@@ -255,7 +262,7 @@ def _build_rich_result(
         npc_checked_at = [int(x) for x in npc_checked_str.split(",") if x.strip()] if npc_checked_str else []
     else:
         npc_checked_at = list(npc_checked_str)
-    run_id = getattr(args, "run_id", _next_run_id_for_tools(OUT_DIR))
+    run_id = getattr(args, "run_id", None) or _next_run_id_for_tools(_OUT_DIR)
     hyp_id = getattr(args, "hypothesis_id", "")
     if not hyp_id:
         if case.test_type == "unknown_pair":
@@ -271,16 +278,17 @@ def _build_rich_result(
         else:
             hyp_id = "HYP-COUNT_ONLY-001"
 
-    # Determine protocol_id if available
-    rb_dir = Path(r"D:\Study\Project\zombie\05_RESEARCH_BRAIN")
-    protocol_id = ""
-    if rb_dir.exists():
-        import re
-        for pf in (rb_dir / "test_protocols").glob("*.json"):
-            data = json.loads(pf.read_text(encoding="utf-8"))
-            if data.get("hypothesis_id") == hyp_id:
-                protocol_id = data.get("protocol_id", "")
-                break
+    # Use explicit protocol_id if provided, otherwise auto-detect from RB
+    protocol_id = getattr(args, "protocol_id", None) or ""
+    if not protocol_id:
+        rb_dir = _REPO_ROOT / "05_RESEARCH_BRAIN"
+        if rb_dir.exists():
+            import re
+            for pf in (rb_dir / "test_protocols").glob("*.json"):
+                data = json.loads(pf.read_text(encoding="utf-8"))
+                if data.get("hypothesis_id") == hyp_id:
+                    protocol_id = data.get("protocol_id", "")
+                    break
 
     return {
         "run_id": run_id,
@@ -310,7 +318,7 @@ def _build_rich_result(
             "npc_checked_at": npc_checked_at,
             "npc_checked_values": [],
             "rerolls_performed": 1,
-            "duration_min": float(getattr(args, "duration_min", 0)),
+            "duration_min": float(getattr(args, "duration_min", None) or 0),
         },
         "evidence": {
             "npc_before": npc_before,
@@ -328,6 +336,14 @@ def _build_rich_result(
     }
 
 
+def _normalize_outcome(value: str) -> tuple[str, str]:
+    """Return (legacy_outcome, rich_outcome)."""
+    v = value.lower()
+    if v in ("blocked", "inconclusive"):
+        return v, "INCONCLUSIVE"
+    return v, v.upper()
+
+
 def cmd_record(tracker: CoverageTracker, args):
     if not args.case_id or not args.outcome:
         print("Error: --case-id and --outcome are required")
@@ -337,12 +353,10 @@ def cmd_record(tracker: CoverageTracker, args):
         print(f"Error: unknown case id {args.case_id}")
         return
 
-    outcome = args.outcome.lower()
-    # Map 'blocked' to 'inconclusive' for Research Brain compatibility
-    rich_outcome = "INCONCLUSIVE" if outcome == "blocked" else outcome.upper()
-    tracker.mark_tested(args.case_id, outcome, args.notes or "")
+    legacy_outcome, rich_outcome = _normalize_outcome(args.outcome)
+    tracker.mark_tested(args.case_id, legacy_outcome, args.notes or "")
     parsed = tracker.eng.parse_spec(case.spec)
-    tester = "manual"
+    tester = getattr(args, "tester", "manual")
 
     # --- Legacy format (always written to 03_TOOLS) ---
     legacy_result = {
@@ -354,24 +368,50 @@ def cmd_record(tracker: CoverageTracker, args):
         "final_gender": parsed["gender"],
         "pair_id": parsed.get("pair_id", ""),
         "hypothesis": parsed.get("pair_id", "") if case.test_type == "unknown_pair" else "COUNT_ONLY",
-        "outcome": outcome.upper(),
+        "outcome": legacy_outcome.upper(),
         "notes": args.notes or "",
         "timestamp": datetime.now().isoformat(),
         "ai_agent": tester,
         "duration_min": 0.0,
     }
-    legacy_file = OUT_DIR / "results" / f"{args.case_id}.json"
+    legacy_file = _OUT_DIR / "results" / f"{args.case_id}.json"
     legacy_file.parent.mkdir(parents=True, exist_ok=True)
     legacy_file.write_text(json.dumps(legacy_result, indent=2), encoding="utf-8")
-    print(f"\nRecorded: {args.case_id} -> {outcome.upper()}")
+    print(f"\nRecorded: {args.case_id} -> {legacy_outcome.upper()}")
     print(f"Legacy result: {legacy_file}")
 
-    # --- Rich format (Research Brain format) ---
-    rich_result = _build_rich_result(case, parsed, rich_outcome, args, args.notes or "", args.tester)
+    # --- Rich format (only when --rich is passed) ---
+    if not getattr(args, "rich", False):
+        nxt = tracker.next_case()
+        if nxt:
+            print(f"\nNext case: {nxt.case_id} - {nxt.label}")
+        else:
+            print("\nAll test cases have been recorded.")
+        return
+
+    rich_result = _build_rich_result(case, parsed, rich_outcome, args, args.notes or "", tester)
+
+    # Validate required schema fields in strict mode
+    if getattr(args, "strict", False):
+        from jsonschema import Draft7Validator
+        schema_path = _REPO_ROOT / "05_RESEARCH_BRAIN" / "schemas" / "run_result.schema.json"
+        if schema_path.exists():
+            schema = json.loads(schema_path.read_text(encoding="utf-8"))
+            validator = Draft7Validator(schema)
+            errors = sorted(validator.iter_errors(rich_result), key=lambda e: e.path)
+            if errors:
+                for err in errors:
+                    print(f"  [strict] Schema error at {'.'.join(str(p) for p in err.path)}: {err.message}")
+                print("Fix errors or remove --strict to save anyway.")
+                return
+        if not rich_result.get("protocol_id"):
+            print("[strict] Missing protocol_id — provide --protocol-id PROT-XXXX")
+            return
+
     run_id = rich_result["run_id"]
 
     # Save to 05_RESEARCH_BRAIN/run_results/ if available
-    rb_dir = Path(r"D:\Study\Project\zombie\05_RESEARCH_BRAIN")
+    rb_dir = _REPO_ROOT / "05_RESEARCH_BRAIN"
     rb_results_dir = rb_dir / "run_results"
     if rb_results_dir.exists():
         rich_path = rb_results_dir / f"{run_id}.json"
@@ -379,7 +419,7 @@ def cmd_record(tracker: CoverageTracker, args):
         print(f"Rich result:  {rich_path}")
     else:
         # Save alongside legacy result
-        rich_path = OUT_DIR / "results" / f"{run_id}_rich.json"
+        rich_path = _OUT_DIR / "results" / f"{run_id}_rich.json"
         rich_path.write_text(json.dumps(rich_result, indent=2, ensure_ascii=False), encoding="utf-8")
         print(f"Rich result:  {rich_path} (05_RESEARCH_BRAIN not found, saved locally)")
 
@@ -406,12 +446,15 @@ def cmd_run_interactive(tracker: CoverageTracker, args):
             break
         print(f"\n{nxt.case_id}: {nxt.label}")
         print(nxt.description)
-        outcome = input("Outcome (pass/fail/blocked/q): ").strip().lower()
+        outcome = input("Outcome (pass/fail/inconclusive/q): ").strip().lower()
         if outcome == "q":
             break
-        if outcome not in {"pass", "fail", "blocked"}:
+        if outcome not in {"pass", "fail", "blocked", "inconclusive"}:
             print("Invalid outcome.")
             continue
+        # Normalize blocked -> inconclusive for internal consistency
+        if outcome == "blocked":
+            outcome = "inconclusive"
         notes = input("Notes: ").strip()
         class Args:
             pass
@@ -419,12 +462,14 @@ def cmd_run_interactive(tracker: CoverageTracker, args):
         a.case_id = nxt.case_id
         a.outcome = outcome
         a.notes = notes
+        a.tester = "manual"
+        a.rich = False  # interactive mode never forces rich format
         cmd_record(tracker, a)
 
 
 def load_results() -> list[dict]:
     results = []
-    results_dir = OUT_DIR / "results"
+    results_dir = _OUT_DIR / "results"
     if not results_dir.exists():
         return results
     for path in results_dir.glob("*.json"):
@@ -456,7 +501,9 @@ def main():
     )
     parser.add_argument("--max", type=int, default=None)
     parser.add_argument("--case-id", type=str)
-    parser.add_argument("--outcome", type=str, choices=["pass", "fail", "blocked"])
+    parser.add_argument("--outcome", type=str,
+                        choices=["pass", "fail", "blocked", "inconclusive"],
+                        help="Test outcome")
     parser.add_argument("--notes", type=str, default="")
     # --- Rich record arguments ---
     parser.add_argument("--rich", action="store_true",
@@ -494,12 +541,14 @@ def main():
     parser.add_argument("--interpretation", type=str, default="",
                         help="Analyst interpretation of the result")
     parser.add_argument("--tester", type=str, default="manual")
+    parser.add_argument("--strict", action="store_true",
+                        help="With --rich: fail if required schema fields are missing")
     args = parser.parse_args()
 
     csp = make_model()
     eng = make_engine(csp)
-    tracker = CoverageTracker(OUT_DIR)
-    dispatcher = MultiAgentDispatcher(OUT_DIR, max_agents=4)
+    tracker = CoverageTracker(_OUT_DIR)
+    dispatcher = MultiAgentDispatcher(_OUT_DIR, max_agents=4)
 
     if args.mode == "list":
         cmd_list(tracker, args)

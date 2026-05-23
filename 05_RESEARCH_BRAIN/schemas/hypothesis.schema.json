@@ -12,7 +12,7 @@
   "properties": {
     "hypothesis_id": {
       "type": "string",
-      "pattern": "^HYP-[A-Z0-9_]+$",
+      "pattern": "^HYP-[A-Z0-9_-]+$",
       "description": "Unique hypothesis identifier, e.g. HYP-CHAR_MIRROR-001"
     },
     "title": {
@@ -30,18 +30,12 @@
     },
     "supporting_claims": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^CLM-[0-9]{4}$"
-      },
+      "items": { "type": "string" },
       "description": "Claim IDs that support this hypothesis"
     },
     "contradicting_claims": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^CLM-[0-9]{4}$"
-      },
+      "items": { "type": "string" },
       "description": "Claim IDs that contradict this hypothesis"
     },
     "unknowns": {
@@ -95,12 +89,13 @@
       "description": "Current status of this hypothesis"
     },
     "test_protocol_id": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "ID of the test protocol for this hypothesis"
     },
     "last_tested_at": {
-      "type": "string",
-      "format": "date-time"
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "ISO timestamp of last test execution"
     },
     "created_at": {
       "type": "string",
@@ -113,6 +108,11 @@
     "notes": {
       "type": "string",
       "description": "Analyst notes on reasoning or caveats"
+    },
+    "applied_run_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Run IDs already applied to this hypothesis. Prevents belief updates from being applied multiple times"
     }
   }
 }

@@ -29,7 +29,7 @@ def _recompute_priority(hyp: dict) -> float:
 
 
 def _apply_test_results(board: dict, results_dir) -> None:
-    """Apply test result evidence to hypothesis likelihoods."""
+    """Apply test result evidence to hypothesis likelihoods (idempotent)."""
     if not results_dir.exists():
         return
 
@@ -38,12 +38,19 @@ def _apply_test_results(board: dict, results_dir) -> None:
             result = load_json(result_file)
             outcome = result.get("outcome", "").upper()
             hyp_id = result.get("hypothesis_id", "")
+            run_id = result.get("run_id", "")
 
             if not hyp_id:
                 continue
 
             for hyp in board.get("hypotheses", []):
                 if hyp["hypothesis_id"] != hyp_id:
+                    continue
+
+                # Idempotency: skip if already applied
+                applied = hyp.get("applied_run_ids", [])
+                if run_id in applied:
+                    info(f"Run {run_id} already applied to {hyp_id}; skipping")
                     continue
 
                 old_likelihood = hyp.get("likelihood", 0.0)
@@ -61,6 +68,7 @@ def _apply_test_results(board: dict, results_dir) -> None:
                     info(f"{hyp_id}: FAIL -> likelihood {old_likelihood:.3f} -> {new_likelihood:.3f}")
                 # INCONCLUSIVE: no change
 
+                hyp.setdefault("applied_run_ids", []).append(run_id)
                 hyp["last_tested_at"] = result.get("created_at", utc_now())
                 new_score = _recompute_priority(hyp)
                 if new_score != old_score:
@@ -70,22 +78,37 @@ def _apply_test_results(board: dict, results_dir) -> None:
             warn(f"Failed to apply {result_file.name}: {e}")
 
 
-def rank_hypotheses(top_n: int = 10, focused_id: str | None = None) -> None:
-    """Rank and display hypotheses."""
+def rank_hypotheses(top_n: int = 10, focused_id: str | None = None,
+                    apply_results: bool = False) -> None:
+    """Rank and display hypotheses.
+
+    Args:
+        apply_results: If False (default), only recompute priorities from current board state
+                       without mutating likelihoods. If True, apply run results to beliefs.
+    """
     board = load_json(hypothesis_board_path())
     hypotheses = board.get("hypotheses", [])
 
-    # Apply test results
-    results_dir = run_results_dir()
-    _apply_test_results(board, results_dir)
+    # Apply test result evidence only when explicitly requested
+    if apply_results:
+        results_dir = run_results_dir()
+        _apply_test_results(board, results_dir)
 
-    # Recompute all priorities
+    # Recompute all priorities (always safe — pure computation)
     for h in hypotheses:
         _recompute_priority(h)
 
-    # Sort by priority
+    # Sort by status priority then priority score
+    status_rank = {
+        "confirmed": 0,
+        "active": 1,
+        "weak": 2,
+        "blocked": 3,
+        "rejected": 4,
+        "deprecated": 5,
+    }
     hypotheses.sort(key=lambda h: (
-        0 if h.get("status") in ("rejected", "deprecated", "blocked") else 1,
+        status_rank.get(h.get("status", "weak"), 9),
         -(h.get("priority_score", 0)),
     ))
 
@@ -157,18 +180,23 @@ def rank_hypotheses(top_n: int = 10, focused_id: str | None = None) -> None:
             bullet(f"    ? {uq}")
         print(f"\n  Next: python generate_next_tests.py --hypothesis-id {top['hypothesis_id']}")
 
-    # Save updated board
-    board["hypotheses"] = hypotheses
-    save_json(hypothesis_board_path(), board)
-    ok("Hypothesis board updated with latest priorities")
+    # Save updated board only if beliefs were actually applied
+    if apply_results:
+        board["hypotheses"] = hypotheses
+        save_json(hypothesis_board_path(), board)
+        ok("Hypothesis board updated with latest priorities and applied results")
+    else:
+        ok("Hypothesis board unchanged (run with --apply-results to apply results)")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Rank hypotheses by evidence and priority")
     parser.add_argument("--top-n", type=int, default=10, help="Number of hypotheses to display")
     parser.add_argument("--hypothesis-id", type=str, help="Show detailed info for a specific hypothesis")
+    parser.add_argument("--apply-results", action="store_true",
+                        help="Apply run results to hypothesis likelihoods (default: read-only ranking)")
     args = parser.parse_args()
-    rank_hypotheses(args.top_n, args.hypothesis_id)
+    rank_hypotheses(args.top_n, args.hypothesis_id, args.apply_results)
 
 
 if __name__ == "__main__":

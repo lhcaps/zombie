@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "created_at": "2026-05-23T00:00:00Z",
   "sources": [
     {
@@ -15,7 +15,10 @@
       "contradictions_detected": [],
       "tags": ["quest_text", "core_requirements"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "primary_evidence",
+      "evidence_weight": 1.0,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0002",
@@ -30,7 +33,10 @@
       "contradictions_detected": [],
       "tags": ["checklist", "hints", "game_content"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "primary_evidence",
+      "evidence_weight": 1.0,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0003",
@@ -46,7 +52,10 @@
       "contradictions_detected": [],
       "tags": ["hints", "game_content", "gender", "character_mirror"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "primary_evidence",
+      "evidence_weight": 1.0,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0004",
@@ -63,7 +72,10 @@
       "contradictions_detected": [],
       "tags": ["theory", "gender_reroll", "character_mirror", "sidecharacter", "count"],
       "ingested_at": "2026-05-22T23:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "secondary_note",
+      "evidence_weight": 0.5,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0005",
@@ -79,7 +91,10 @@
       "contradictions_detected": [],
       "tags": ["csp_model", "probability", "count", "tail", "character_mirror"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "secondary_note",
+      "evidence_weight": 0.5,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0006",
@@ -95,7 +110,10 @@
       "contradictions_detected": [],
       "tags": ["solution", "steps", "route", "tail"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "derived_summary",
+      "evidence_weight": 0.15,
+      "can_create_new_claims": false
     },
     {
       "source_id": "SRC-0007",
@@ -110,7 +128,10 @@
       "contradictions_detected": [],
       "tags": ["checklist", "english", "gender"],
       "ingested_at": "2026-05-21T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "secondary_note",
+      "evidence_weight": 0.5,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0008",
@@ -126,7 +147,10 @@
       "contradictions_detected": [],
       "tags": ["image_analysis", "character_mirror", "bc", "xy"],
       "ingested_at": "2026-05-22T00:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "primary_evidence",
+      "evidence_weight": 1.0,
+      "can_create_new_claims": true
     },
     {
       "source_id": "SRC-0099",
@@ -141,7 +165,10 @@
       "contradictions_detected": [],
       "tags": ["final", "consolidated", "solution"],
       "ingested_at": "2026-05-22T23:00:00Z",
-      "added_by": "manual"
+      "added_by": "manual",
+      "source_role": "derived_summary",
+      "evidence_weight": 0.15,
+      "can_create_new_claims": false
     }
   ]
 }

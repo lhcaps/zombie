@@ -28,14 +28,25 @@ from core import (
 
 
 def _get_source_content(source_entry: dict) -> str:
-    preview = source_entry.get("_content_preview", "")
-    path = source_entry["source_path"]
-    if preview:
-        return preview
+    """Read full file content from source_path. Falls back to _content_preview only if file is missing."""
+    path = source_entry.get("source_path", "")
+    if not path:
+        return source_entry.get("_content_preview", "")
     p = Path(path)
     if p.exists():
-        return p.read_text(encoding="utf-8", errors="replace")[:2000]
-    return f"[Content not found at {path}]"
+        suffix = p.suffix.lower()
+        if suffix == ".json":
+            try:
+                import orjson
+                return orjson.dumps(
+                    orjson.loads(p.read_bytes()),
+                    option=orjson.OPT_INDENT_2 | orjson.OPT_NON_STR_KEYS
+                ).decode("utf-8")
+            except Exception:
+                return json.dumps(json.loads(p.read_text(encoding="utf-8")), indent=2, ensure_ascii=False)
+        return p.read_text(encoding="utf-8", errors="replace")
+    # File not found — last resort fallback to preview
+    return source_entry.get("_content_preview", f"[File not found: {path}]")
 
 
 def _call_llm(prompt: str, system: str = "", model: str = "gpt-4o") -> str | None:
@@ -88,7 +99,7 @@ def _call_anthropic(prompt: str, system: str = "") -> str | None:
 
 def _parse_claims_from_response(response: str, source_id: str, existing_claims: list[dict]) -> list[dict]:
     """Parse extracted claims from LLM response."""
-    claims = []
+    new_claims = []
 
     # Try to extract JSON array first
     json_match = re.search(r"```json\s*(.*?)\s*```", response, re.DOTALL)
@@ -97,7 +108,7 @@ def _parse_claims_from_response(response: str, source_id: str, existing_claims: 
             parsed = json.loads(json_match.group(1))
             if isinstance(parsed, list):
                 for item in parsed:
-                    claims.append(_build_claim(item, source_id, existing_claims))
+                    new_claims.append(_build_claim(item, source_id, existing_claims, new_claims))
         except json.JSONDecodeError:
             pass
 
@@ -116,14 +127,14 @@ def _parse_claims_from_response(response: str, source_id: str, existing_claims: 
             "evidence": m.group(6).strip(),
             "tags": [t.strip() for t in m.group(7).strip("[]").split(",") if t.strip()],
         }
-        claims.append(_build_claim(item, source_id, existing_claims))
+        new_claims.append(_build_claim(item, source_id, existing_claims, new_claims))
 
-    return claims
+    return new_claims
 
 
-def _build_claim(item: dict, source_id: str, existing_claims: list[dict]) -> dict:
+def _build_claim(item: dict, source_id: str, existing_claims: list[dict], new_claims: list[dict]) -> dict:
     """Build a complete claim dict from parsed data."""
-    claim_id = next_claim_id(existing_claims + claims)
+    claim_id = next_claim_id(existing_claims + new_claims)
     claim_text = item.get("claim", item.get("text", ""))
     return {
         "claim_id": claim_id,

@@ -1,57 +1,38 @@
 {
-  "saved_at": "2026-05-22T00:01:58.222094",
+  "saved_at": "2026-05-24T00:07:22.996069",
   "dimensions": {
-    "path": {
-      "total": 8,
-      "covered": 1,
-      "pct": 12.5
-    },
-    "pair": {
-      "total": 4,
-      "covered": 0,
-      "pct": 0.0
-    },
-    "rotation": {
-      "total": 4,
-      "covered": 0,
-      "pct": 0.0
-    },
-    "start_gender": {
+    "final_gender": {
       "total": 2,
       "covered": 1,
       "pct": 50.0
     },
-    "target_gender": {
-      "total": 2,
+    "count": {
+      "total": 4,
+      "covered": 1,
+      "pct": 25.0
+    },
+    "unknown_pair": {
+      "total": 6,
       "covered": 0,
       "pct": 0.0
     },
-    "race_variant": {
+    "core_count": {
       "total": 8,
-      "covered": 0,
-      "pct": 0.0
+      "covered": 1,
+      "pct": 12.5
     },
-    "world": {
-      "total": 5,
-      "covered": 0,
-      "pct": 0.0
-    },
-    "blood_bar_level": {
-      "total": 2,
-      "covered": 0,
-      "pct": 0.0
-    },
-    "swap_timing": {
-      "total": 3,
+    "tail_probe": {
+      "total": 12,
       "covered": 0,
       "pct": 0.0
     }
   },
   "results": [
     {
-      "case_id": "ABC_MMF",
-      "spec": "MMF",
-      "status": "fail"
+      "case_id": "CORE_F_50",
+      "test_type": "core_count",
+      "spec": "F_50",
+      "status": "pass"
     }
   ]
 }

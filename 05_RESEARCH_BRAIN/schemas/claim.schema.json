@@ -7,12 +7,12 @@
   "properties": {
     "claim_id": {
       "type": "string",
-      "pattern": "^CLM-[0-9]{4}$",
+      "pattern": "^CLM-[0-9]+$",
       "description": "Unique claim identifier, e.g. CLM-0001"
     },
     "source_id": {
       "type": "string",
-      "pattern": "^SRC-[0-9]{4}$",
+      "pattern": "^SRC-[0-9]+$",
       "description": "Source this claim was extracted from"
     },
     "claim": {
@@ -55,18 +55,12 @@
     },
     "contradicts": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^CLM-[0-9]{4}$"
-      },
+      "items": { "type": "string" },
       "description": "IDs of claims this contradicts"
     },
     "supported_by": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "pattern": "^CLM-[0-9]{4}$"
-      },
+      "items": { "type": "string" },
       "description": "IDs of claims that support this one"
     },
     "tags": {

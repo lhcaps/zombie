@@ -4,6 +4,7 @@ Shared utilities for 05_RESEARCH_BRAIN scripts.
 from __future__ import annotations
 
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -17,6 +18,21 @@ RB_DIR = SCRIPT_DIR.parent
 DATA_DIR = RB_DIR
 SCHEMAS_DIR = RB_DIR / "schemas"
 PROMPTS_DIR = RB_DIR / "prompts"
+
+# --- Repo-relative path resolver ---
+# REPO_ROOT is the project root (parent of 05_RESEARCH_BRAIN / 03_TOOLS / etc.)
+REPO_ROOT = RB_DIR.parent
+
+
+def tools_dir() -> Path:
+    return REPO_ROOT / "03_TOOLS"
+
+
+def zombie_test_runner_out_dir() -> Path:
+    env = os.environ.get("ZOMBIE_OUT_DIR")
+    if env:
+        return Path(env)
+    return tools_dir() / "zombie_test_runner"
 
 
 # --- State file paths ---

@@ -17,7 +17,7 @@
     },
     "hypothesis_id": {
       "type": "string",
-      "pattern": "^HYP-[A-Z0-9_]+$",
+      "pattern": "^HYP-[A-Z0-9_-]+$",
       "description": "Hypothesis this protocol tests"
     },
     "goal": {
