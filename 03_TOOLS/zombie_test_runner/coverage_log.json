@@ -1,0 +1,57 @@
+{
+  "saved_at": "2026-05-22T00:01:58.222094",
+  "dimensions": {
+    "path": {
+      "total": 8,
+      "covered": 1,
+      "pct": 12.5
+    },
+    "pair": {
+      "total": 4,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "rotation": {
+      "total": 4,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "start_gender": {
+      "total": 2,
+      "covered": 1,
+      "pct": 50.0
+    },
+    "target_gender": {
+      "total": 2,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "race_variant": {
+      "total": 8,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "world": {
+      "total": 5,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "blood_bar_level": {
+      "total": 2,
+      "covered": 0,
+      "pct": 0.0
+    },
+    "swap_timing": {
+      "total": 3,
+      "covered": 0,
+      "pct": 0.0
+    }
+  },
+  "results": [
+    {
+      "case_id": "ABC_MMF",
+      "spec": "MMF",
+      "status": "fail"
+    }
+  ]
+}

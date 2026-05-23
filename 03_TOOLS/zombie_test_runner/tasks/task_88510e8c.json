@@ -1,0 +1,47 @@
+{
+  "task_id": "task_88510e8c",
+  "test_type": "core_count",
+  "spec": "F_50",
+  "label": "Core Same-Gender x50 (Female)",
+  "blocks": [
+    {
+      "step": 1,
+      "phase": "gender_reroll",
+      "actor": "quest_holder",
+      "target": "-",
+      "action": "Use exactly one gender reroll so actor final gender is Female."
+    },
+    {
+      "step": 2,
+      "phase": "same_gender_zombify",
+      "actor": "F",
+      "target": "F",
+      "repeat": "x50",
+      "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+    },
+    {
+      "step": 3,
+      "phase": "milestone_checks",
+      "actor": "quest_holder",
+      "target": "-",
+      "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+    }
+  ],
+  "hard_rules": [
+    "Exactly one gender reroll for the clean route",
+    "After the reroll, use same-gender targets only",
+    "Targets can be any race and do not need to be unique",
+    "Every zombification must be manual grip",
+    "Use passive Blood Bar whenever possible",
+    "No return/die/invade commands for clean tests",
+    "Zombies do NOT act after conversion",
+    "No Volt or mode for clean tests",
+    "Do not use a second gender reroll unless deliberately resetting after a failed route"
+  ],
+  "probability": 0.42,
+  "info_gain": 1.2515387669959646,
+  "score": 0.5256462821383051,
+  "context": "# AI Test Runner \u2014 Task Assignment\n\n## Task ID: task_88510e8c\n\n## Test Type: core_count\n## Spec: F_50\n## Label: Core Same-Gender x50 (Female)\n\n## Probability of Success: 0.4200 (42.00%)\n## Expected Info Gain: 1.25 bits\n## Score (P \u00d7 IG): 0.5256\n\n---\n\n## Steps to Execute\n\n1. **Use exactly one gender reroll so actor final gender is Female.** \u2014 actor=quest_holder, target=-\n2. **For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie.** \u2014 actor=F, target=F, repeat=x50\n3. **Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls.** \u2014 actor=quest_holder, target=-\n\n---\n\n## Hard Rules \u2014 Do NOT Break\n\n- Exactly one gender reroll for the clean route\n- After the reroll, use same-gender targets only\n- Targets can be any race and do not need to be unique\n- Every zombification must be manual grip\n- Use passive Blood Bar whenever possible\n- No return/die/invade commands for clean tests\n- Zombies do NOT act after conversion\n- No Volt or mode for clean tests\n- Do not use a second gender reroll unless deliberately resetting after a failed route\n\n---\n\n## Outcome Logging\n\nAfter completing the test, fill in:\n\n```\nRun ID: task_88510e8c\nOutcome: PASS / FAIL / BLOCKED / UNKNOWN\nNPC Result: (what Jugram/Balance said)\nNotes: (anything unusual)\nTarget genders confirmed:\nTarget races:\nBlood Bar values:\nManual grip confirmed: YES / NO\nZombie confirmed: YES / NO\nGender swap confirmed: YES / NO\nCommands used: NONE\nVolt/mode used: NONE\n```\n\nSave your result to:\n`D:\\Study\\Project\\zombie\\03_TOOLS\\zombie_test_runner\\results\\task_88510e8c.json`\n",
+  "created_at": "2026-05-22T00:30:04.977519",
+  "status": "pending"
+}

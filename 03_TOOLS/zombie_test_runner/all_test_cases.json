@@ -1,0 +1,1218 @@
+[
+  {
+    "case_id": "CORE_F_50",
+    "test_type": "core_count",
+    "spec": "F_50",
+    "label": "Core Same-Gender x50 (Female)",
+    "description": "Use one gender reroll so the actor is Female, then zombify 50 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.42,
+    "info_gain": 1.2515387669959646,
+    "score": 0.5256462821383051,
+    "priority": 1,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_M_50",
+    "test_type": "core_count",
+    "spec": "M_50",
+    "label": "Core Same-Gender x50 (Male)",
+    "description": "Use one gender reroll so the actor is Male, then zombify 50 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.42,
+    "info_gain": 1.2515387669959646,
+    "score": 0.5256462821383051,
+    "priority": 2,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_CHAR_MIRROR",
+    "test_type": "unknown_pair",
+    "spec": "F_50_CHAR_MIRROR",
+    "label": "Appearance Mirror / Character Copy after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: copy or mirror another player's character appearance without item/accessory requirements + zombify a same-gender target while the character-copy/mirror relation is active.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "copy or mirror another player's character appearance without item/accessory requirements"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "zombify a same-gender target while the character-copy/mirror relation is active"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.231,
+    "info_gain": 2.1140352432460294,
+    "score": 0.4883421411898328,
+    "priority": 3,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_CHAR_MIRROR",
+    "test_type": "unknown_pair",
+    "spec": "M_50_CHAR_MIRROR",
+    "label": "Appearance Mirror / Character Copy after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: copy or mirror another player's character appearance without item/accessory requirements + zombify a same-gender target while the character-copy/mirror relation is active.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "copy or mirror another player's character appearance without item/accessory requirements"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "zombify a same-gender target while the character-copy/mirror relation is active"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.231,
+    "info_gain": 2.1140352432460294,
+    "score": 0.4883421411898328,
+    "priority": 4,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_F_49",
+    "test_type": "core_count",
+    "spec": "F_49",
+    "label": "Core Same-Gender x49 (Female)",
+    "description": "Use one gender reroll so the actor is Female, then zombify 49 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x49",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.23,
+    "info_gain": 2.1202942337177118,
+    "score": 0.48766767375507375,
+    "priority": 5,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_M_49",
+    "test_type": "core_count",
+    "spec": "M_49",
+    "label": "Core Same-Gender x49 (Male)",
+    "description": "Use one gender reroll so the actor is Male, then zombify 49 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x49",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.23,
+    "info_gain": 2.1202942337177118,
+    "score": 0.48766767375507375,
+    "priority": 6,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_F_45",
+    "test_type": "core_count",
+    "spec": "F_45",
+    "label": "Core Same-Gender x45 (Female)",
+    "description": "Use one gender reroll so the actor is Female, then zombify 45 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x45",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.15,
+    "info_gain": 2.736965594166206,
+    "score": 0.4105448391249309,
+    "priority": 7,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_M_45",
+    "test_type": "core_count",
+    "spec": "M_45",
+    "label": "Core Same-Gender x45 (Male)",
+    "description": "Use one gender reroll so the actor is Male, then zombify 45 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x45",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.15,
+    "info_gain": 2.736965594166206,
+    "score": 0.4105448391249309,
+    "priority": 8,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_PASSIVE_GRIP",
+    "test_type": "unknown_pair",
+    "spec": "F_50_PASSIVE_GRIP",
+    "label": "Passive Blood Bar + Manual Grip after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: same-gender passive Blood Bar buildup + same-gender manual grip zombification.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender passive Blood Bar buildup"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender manual grip zombification"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.0924,
+    "info_gain": 3.435963338133392,
+    "score": 0.3174830124435254,
+    "priority": 9,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_PASSIVE_GRIP",
+    "test_type": "unknown_pair",
+    "spec": "M_50_PASSIVE_GRIP",
+    "label": "Passive Blood Bar + Manual Grip after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: same-gender passive Blood Bar buildup + same-gender manual grip zombification.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender passive Blood Bar buildup"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender manual grip zombification"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.0924,
+    "info_gain": 3.435963338133392,
+    "score": 0.3174830124435254,
+    "priority": 10,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_F_40",
+    "test_type": "core_count",
+    "spec": "F_40",
+    "label": "Core Same-Gender x40 (Female)",
+    "description": "Use one gender reroll so the actor is Female, then zombify 40 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x40",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.08,
+    "info_gain": 3.643856189774725,
+    "score": 0.29150849518197797,
+    "priority": 11,
+    "status": "untested"
+  },
+  {
+    "case_id": "CORE_M_40",
+    "test_type": "core_count",
+    "spec": "M_40",
+    "label": "Core Same-Gender x40 (Male)",
+    "description": "Use one gender reroll so the actor is Male, then zombify 40 same-gender targets through passive Blood Bar and manual grip.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x40",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.08,
+    "info_gain": 3.643856189774725,
+    "score": 0.29150849518197797,
+    "priority": 12,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_COUNT_ONLY",
+    "test_type": "unknown_pair",
+    "spec": "F_50_COUNT_ONLY",
+    "label": "Same-Gender Zombification Count Only after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: same-gender zombification amount + NPC progress check after the full amount.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender zombification amount"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "NPC progress check after the full amount"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.058800000000000005,
+    "info_gain": 4.088040034713085,
+    "score": 0.24037675404112943,
+    "priority": 13,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_COUNT_ONLY",
+    "test_type": "unknown_pair",
+    "spec": "M_50_COUNT_ONLY",
+    "label": "Same-Gender Zombification Count Only after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: same-gender zombification amount + NPC progress check after the full amount.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "same-gender zombification amount"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "NPC progress check after the full amount"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.058800000000000005,
+    "info_gain": 4.088040034713085,
+    "score": 0.24037675404112943,
+    "priority": 14,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_T_G_BASE",
+    "test_type": "unknown_pair",
+    "spec": "F_50_T_G_BASE",
+    "label": "Base T/G After Count after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: Splatter/T hits on same-gender targets + Self Infliction/G hits on same-gender targets.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "Splatter/T hits on same-gender targets"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "Self Infliction/G hits on same-gender targets"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.025199999999999997,
+    "info_gain": 5.310432456049533,
+    "score": 0.13382289789244822,
+    "priority": 15,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_T_G_BASE",
+    "test_type": "unknown_pair",
+    "spec": "M_50_T_G_BASE",
+    "label": "Base T/G After Count after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: Splatter/T hits on same-gender targets + Self Infliction/G hits on same-gender targets.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "Splatter/T hits on same-gender targets"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "Self Infliction/G hits on same-gender targets"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.025199999999999997,
+    "info_gain": 5.310432456049533,
+    "score": 0.13382289789244822,
+    "priority": 16,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_X_C_BASE",
+    "test_type": "unknown_pair",
+    "spec": "F_50_X_C_BASE",
+    "label": "Base X/C After Count after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: Dancing Dead Boys/X hits on same-gender targets + Blood Drive/C hits on same-gender targets.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "Dancing Dead Boys/X hits on same-gender targets"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "Blood Drive/C hits on same-gender targets"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.012599999999999998,
+    "info_gain": 6.310432456049533,
+    "score": 0.0795114489462241,
+    "priority": 17,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_X_C_BASE",
+    "test_type": "unknown_pair",
+    "spec": "M_50_X_C_BASE",
+    "label": "Base X/C After Count after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: Dancing Dead Boys/X hits on same-gender targets + Blood Drive/C hits on same-gender targets.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "Dancing Dead Boys/X hits on same-gender targets"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "Blood Drive/C hits on same-gender targets"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.012599999999999998,
+    "info_gain": 6.310432456049533,
+    "score": 0.0795114489462241,
+    "priority": 18,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_F_50_COMMANDS",
+    "test_type": "unknown_pair",
+    "spec": "F_50_COMMANDS",
+    "label": "Return/Die Commands after x50 (Female)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: return command + die command.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Female."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "F",
+        "target": "F",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "return command"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "F",
+        "target": "F",
+        "repeat": "same fixed amount if measurable",
+        "action": "die command"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.0005144999999999999,
+    "info_gain": 10.924541302430207,
+    "score": 0.00562067650010034,
+    "priority": 19,
+    "status": "untested"
+  },
+  {
+    "case_id": "TAIL_M_50_COMMANDS",
+    "test_type": "unknown_pair",
+    "spec": "M_50_COMMANDS",
+    "label": "Return/Die Commands after x50 (Male)",
+    "description": "After the one-reroll x50 same-gender zombification core, probe the tail pair: return command + die command.",
+    "steps": [
+      {
+        "step": 1,
+        "phase": "gender_reroll",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Use exactly one gender reroll so actor final gender is Male."
+      },
+      {
+        "step": 2,
+        "phase": "same_gender_zombify",
+        "actor": "M",
+        "target": "M",
+        "repeat": "x50",
+        "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+      },
+      {
+        "step": 3,
+        "phase": "milestone_checks",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+      },
+      {
+        "step": 4,
+        "phase": "unknown_task_a",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "return command"
+      },
+      {
+        "step": 5,
+        "phase": "unknown_task_b",
+        "actor": "M",
+        "target": "M",
+        "repeat": "same fixed amount if measurable",
+        "action": "die command"
+      },
+      {
+        "step": 6,
+        "phase": "check",
+        "actor": "quest_holder",
+        "target": "-",
+        "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+      }
+    ],
+    "constraints": [
+      "Exactly one gender reroll for the clean route.",
+      "After the reroll, zombify same-gender targets only.",
+      "Targets can be any race and do not need to be unique.",
+      "Use passive Blood Bar whenever possible.",
+      "Every zombification must be manual grip.",
+      "No return/die/invade commands for clean tests.",
+      "Zombies do not need to do anything.",
+      "No Volt/mode requirement for clean tests.",
+      "Do not add a second gender reroll unless deliberately resetting after a failed route."
+    ],
+    "probability": 0.0005144999999999999,
+    "info_gain": 10.924541302430207,
+    "score": 0.00562067650010034,
+    "priority": 20,
+    "status": "untested"
+  }
+]

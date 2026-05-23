@@ -1,0 +1,281 @@
+{
+  "generated": "2026-05-22T00:46:08.248403",
+  "evidence": [
+    {
+      "key": "one_reroll",
+      "weight": 3.0,
+      "note": "Only one gender reroll is needed; extra rerolls reset progress."
+    },
+    {
+      "key": "same_gender_zombify",
+      "weight": 3.0,
+      "note": "Zombification targets match the post-reroll gender."
+    },
+    {
+      "key": "amount_50ish",
+      "weight": 2.5,
+      "note": "The amount is 50-ish."
+    },
+    {
+      "key": "below_57",
+      "weight": 1.8,
+      "note": "57 was called too much, so the count is below that."
+    },
+    {
+      "key": "any_race",
+      "weight": 1.2,
+      "note": "Targets can be any race."
+    },
+    {
+      "key": "not_unique",
+      "weight": 1.2,
+      "note": "Targets do not have to be unique."
+    },
+    {
+      "key": "passive_blood",
+      "weight": 1.5,
+      "note": "Zombie passive Blood Bar is involved in the zombifying step."
+    },
+    {
+      "key": "manual_grip",
+      "weight": 1.7,
+      "note": "Manual grip is the clean zombification method."
+    },
+    {
+      "key": "no_commands",
+      "weight": 2.2,
+      "note": "Return/die/invade commands are not needed for the clean route."
+    },
+    {
+      "key": "no_mode",
+      "weight": 1.2,
+      "note": "No Volt/mode lock is part of the clean route."
+    },
+    {
+      "key": "zombie_do_nothing",
+      "weight": 1.6,
+      "note": "Converted zombies do not need to act."
+    },
+    {
+      "key": "tail_order_randomized",
+      "weight": 1.8,
+      "note": "The two tail tasks are same for everyone but order can differ."
+    },
+    {
+      "key": "after_zombify_tail",
+      "weight": 2.0,
+      "note": "SideCharacter gave the order as reroll -> zombify -> ??? -> ???."
+    },
+    {
+      "key": "bc_char",
+      "weight": 3.5,
+      "note": "Image solution says BC uses the char rule."
+    },
+    {
+      "key": "xy_mirror",
+      "weight": 3.2,
+      "note": "Image solution says xy uses the mirror rule."
+    },
+    {
+      "key": "bc_gender",
+      "weight": 3.2,
+      "note": "Image solution says bc uses the gender rule."
+    },
+    {
+      "key": "appearance_copy_seen",
+      "weight": 3.0,
+      "note": "Screenshot shows one player copied another player's appearance."
+    },
+    {
+      "key": "items_not_needed",
+      "weight": 2.2,
+      "note": "Items/accessories are explicitly not needed."
+    }
+  ],
+  "count_distribution": [
+    {
+      "amount": 50,
+      "probability": 0.48,
+      "reason": "literal 50-ish and clean upper candidate below 57"
+    },
+    {
+      "amount": 49,
+      "probability": 0.25,
+      "reason": "just under 50 if exact 50 was rounded upward"
+    },
+    {
+      "amount": 45,
+      "probability": 0.17,
+      "reason": "still 50-ish but lower"
+    },
+    {
+      "amount": 40,
+      "probability": 0.1,
+      "reason": "lower fallback if logs/counting are noisy"
+    }
+  ],
+  "tail_candidates": [
+    {
+      "id": "COPY_MIRROR_FINAL_GRIP",
+      "label": "Copy/mirror appearance, then same-gender final zombify",
+      "tasks": [
+        "copy or mirror another player's character appearance after the count",
+        "zombify/grip a same-gender target while that copied/mirrored relation is active"
+      ],
+      "raw_score": 34.99602719567407,
+      "probability": 0.5577549839637239,
+      "top1_rate": 1.0,
+      "support_score": 36.2,
+      "contradiction_score": 0,
+      "caution": "Best fit, but exact direction is still unknown: actor copies target, target copies actor, or B/C copy each other."
+    },
+    {
+      "id": "BC_SAME_GENDER_CHAR_MIRROR",
+      "label": "B/C same-gender character mirror pair",
+      "tasks": [
+        "make the relevant B/C players same gender after the one reroll route",
+        "make their character appearance mirror/copy relation match before the final check"
+      ],
+      "raw_score": 31.572883644359855,
+      "probability": 0.2993250278089009,
+      "top1_rate": 0.0,
+      "support_score": 33.0,
+      "contradiction_score": 0,
+      "caution": "Strong decode fit. It may be a state check rather than an extra kill/count check."
+    },
+    {
+      "id": "COPY_BEFORE_KEEP_ACTIVE",
+      "label": "Copy appearance before count and keep it active",
+      "tasks": [
+        "copy/mirror appearance before starting the same-gender count",
+        "keep the relation active through the x50-ish zombification loop"
+      ],
+      "raw_score": 26.78520157190807,
+      "probability": 0.12534154647640208,
+      "top1_rate": 0.0,
+      "support_score": 30.799999999999997,
+      "contradiction_score": 2.0,
+      "caution": "Very plausible mechanically, but it slightly fights the stated order of zombify -> ??? -> ???."
+    },
+    {
+      "id": "APPEARANCE_ONLY_CHECK",
+      "label": "Appearance copy as the whole tail",
+      "tasks": [
+        "copy another player's character appearance",
+        "talk/check NPC without items/accessory matching"
+      ],
+      "raw_score": 14.062725086810278,
+      "probability": 0.012402087934198058,
+      "top1_rate": 0.0,
+      "support_score": 23.4,
+      "contradiction_score": 6.2,
+      "caution": "Explains the screenshot, but underuses the same-gender zombification hint."
+    },
+    {
+      "id": "PASSIVE_GRIP_COUNTERS",
+      "label": "Passive Blood Bar and manual grip are the two tail counters",
+      "tasks": [
+        "fill same-gender targets with passive Blood Bar",
+        "manual-grip those same-gender targets into zombies"
+      ],
+      "raw_score": 6.712418536251693,
+      "probability": 0.003259081696144237,
+      "top1_rate": 0.0,
+      "support_score": 19.7,
+      "contradiction_score": 9.7,
+      "caution": "Could be part of the zombifying phase rather than the two decoded tail tasks."
+    },
+    {
+      "id": "COUNT_ONLY",
+      "label": "The x50-ish same-gender count is all visible work",
+      "tasks": [
+        "complete the true same-gender zombification amount",
+        "perform the NPC/progress check after the amount"
+      ],
+      "raw_score": -0.27522082852655494,
+      "probability": 0.0009148140877778878,
+      "top1_rate": 0.0,
+      "support_score": 16.599999999999998,
+      "contradiction_score": 12.9,
+      "caution": "Good baseline, but it does not explain the new image solution."
+    },
+    {
+      "id": "BASE_TG_MOVES",
+      "label": "Base Zombie T/G move counters",
+      "tasks": [
+        "use Splatter/T on same-gender targets",
+        "use Self Infliction/G on same-gender targets"
+      ],
+      "raw_score": -5.808410716760034,
+      "probability": 0.00033451654383349054,
+      "top1_rate": 0.0,
+      "support_score": 10.0,
+      "contradiction_score": 11.299999999999999,
+      "caution": "Fallback only; current hints point to char/mirror/gender, not move names."
+    },
+    {
+      "id": "BASE_XC_MOVES",
+      "label": "Base Zombie X/C move counters",
+      "tasks": [
+        "use Dancing Dead Boys/X on same-gender targets",
+        "use Blood Drive/C on same-gender targets"
+      ],
+      "raw_score": -6.2138758248681984,
+      "probability": 0.00031074275264982655,
+      "top1_rate": 0.0,
+      "support_score": 10.0,
+      "contradiction_score": 11.299999999999999,
+      "caution": "Lower fallback than T/G because no current hint points at X/C specifically."
+    },
+    {
+      "id": "ITEM_ACCESSORY_MATCH",
+      "label": "Item/accessory cosplay match",
+      "tasks": [
+        "match visible accessories/items",
+        "talk/check NPC after cosmetic matching"
+      ],
+      "raw_score": -7.0720230054281465,
+      "probability": 0.0002658517035569046,
+      "top1_rate": 0.0,
+      "support_score": 6.5,
+      "contradiction_score": 8.4,
+      "caution": "Explicitly downgraded because items/accessories are not needed."
+    },
+    {
+      "id": "COMMANDS",
+      "label": "Return/die command route",
+      "tasks": [
+        "use return command after zombifying",
+        "use die command after zombifying"
+      ],
+      "raw_score": -14.437023005428145,
+      "probability": 6.967542957791543e-05,
+      "top1_rate": 0.0,
+      "support_score": 5.0,
+      "contradiction_score": 13.5,
+      "caution": "Strongly contradicted by newer hints."
+    },
+    {
+      "id": "OLD_MULTI_REROLL",
+      "label": "Old repeated-reroll A/B/C route",
+      "tasks": [
+        "reroll between gender path blocks",
+        "repeat the old A/B/C or 2x2 matrix"
+      ],
+      "raw_score": -20.86017018598809,
+      "probability": 2.167160323479937e-05,
+      "top1_rate": 0.0,
+      "support_score": 1.8,
+      "contradiction_score": 15.7,
+      "caution": "Reset-risk route. Do not test first."
+    }
+  ],
+  "best_route": {
+    "steps": [
+      "Use exactly one gender reroll.",
+      "Zombify same-gender targets with passive Blood Bar -> knock -> manual grip.",
+      "Check milestones at 40, 45, 49, and 50; top count is 50.",
+      "For the two tail tasks, first test appearance copy/mirror plus same-gender final zombify."
+    ]
+  }
+}

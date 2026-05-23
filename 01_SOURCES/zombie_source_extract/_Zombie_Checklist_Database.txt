@@ -1,0 +1,252 @@
+# SOURCE: D:\Study\Project\zombie\_Zombie Checklist Database.docx
+# SHA256_SHORT: 7b419032d183b784
+
+[P1] Zombie Checklist Database
+[P3] use key words to search through the document (like zombified, confused, killed, etc.) (F3 to search)
+[P5] (if u make differents test from this document, talk with @infinity24k so he can put here there and make this list bigger, to help the community)
+[P6] Current hints
+[P7] Can be done in any world
+[P8] Can be done in base
+[P9] Zombification of a player is required
+[P10] The zombies don't need to do anything just be zombified
+[P11] Its not a player requirement but you need players
+[P12] No specific elements needed
+[P13] Gender swap required
+[P14] Exactly what you have to do” and once you understand it should "click"
+[P15] very “niche / specific” and “incredibly stupid” requirements
+[P16] Takes Ages / hard to Figure out, Easy to do
+[P17] “Its something Giselle WOULD do”
+[P18] Requires zombification through manually gripping, not though moves
+[P19] You can do it without alts / friends.
+[P20] Another Quincy for Zombie isn’t needed.
+[P21] You don’t need to Zombify yourself or make your Zombies do anything.
+[P22] Has something to do with the Blood Bar passive
+[P23] “You do it Twice”
+[P24] “TF2 autobalance us”
+[P25] “You won’t know what you even did to pass it”
+[P27] (last hint: 13/05/26)
+“Become like them..then control their minds.”
+[P34] (thanks to @TheAscended for making all of this test possible, the true Zombie contributor)
+[P35] PRE RESURGENCE UPDATE:
+[P37] Before gender swap: (Man)
+[P38] Swapped bodies with another player, zombified them, then used return/die commands. (zombified the confusion user not who i swapped with)
+[P39] Zombified another player, became zombified, then attempted return/die commands (failed while zombified).
+[P40] Became zombified by another player, then zombified someone else.
+[P41] Used a zombie to kill a former party member.
+[P42] Zombified multiple players in hell and used commands on them.
+[P43] Attempted to wear shinigami clothes.
+[P44] Talked to every NPC in the game.
+[P45] Died and revived with 5% HP. (potential bug?)
+[P46] Remained zombified for over 2 hours.
+[P47] Zombified someone, died, respawned, then used commands on the zombie.
+[P48] Zombified 10 SRs simultaneously.
+[P49] Splattered 10 SRs simultaneously.
+[P50] Hit 10 SRs with counter simultaneously.
+[P51] Commanded 10 SRs to return simultaneously.
+[P52] Commanded 10 SRs to die simultaneously.
+[P53] Wore shinigami accessories, then zombified a shinigami.
+[P54] Killed a world boss with full blood bar.
+[P55] Used a zombie to fight a world boss.
+[P56] While zombified, zombified another player and attempted commands (failed).
+[P57] Countered a zombie counter using another zombie counter.
+[P58] Became zombified, then had a zombie kill the player responsible.
+[P59] While zombified, force popped a balance user with a shinigami in the party.
+[P60] Got hit by compulsory G, then zombified the user.
+[P61] Zombified 14 SRs simultaneously.
+[P62] Hit 14 SRs with G counter simultaneously.
+[P63] Knocked 14 SRs simultaneously with counter.
+[P64] Allowed 14 zombie SRs to die from timer expiration.
+[P65] Knocked down 5–10 personal zombies.
+[P66] Zombified an explode user, then killed them.
+[P67] Helped shinigami win a KT raid by killing fellow quincies, then zombified a shinigami afterward.
+[P68] Joined a party of 5 quincies, then zombified all of them.
+[P69] Killed and zombified fellow quincies during a raid while grouped with a shinigami, allowing shinigamis to win, then zombified more afterward.
+[P70] Won a fight using only blut arterie.
+[P71] Won a fight using only Z/X/C abilities, then zombified the opponent.
+[P72] Won a fight while one hit from death, then zombified the opponent.
+[P73] Attempted to help shinigamis win a hell CTF raid by bringing the flag to their base.
+[P74] Won a KT raid with quincies, then zombified a quincy afterward.
+[P75] Zombified a snow user while they were in bankai and while using volt.
+[P76] Used dancing dead boys (C) on zangetsu bankai.
+[P77] Zombified zangetsu bankai.
+[P78] Knocked someone, got knocked down, recovered, then zombified both remaining players.
+[P79] Completed 10 missions with 3 SRs in the party, then zombified them afterward.
+[P80] Fused with a party member during an attack, then zombified both the attacker and ally.
+[P81] Killed own zombie using heilig pfeil.
+[P82] Zombified an explode user who had been downed by an SR while being zombified.
+[P83] Defeated blood bankai while using volt.
+[P84] Got hit by burner finger 1, was forced to kneel, then forced the heat user to kneel before zombifying them.
+[P85] Talked to Jugram with 10k+ soul style.
+[P86] Forced 8 players to kneel simultaneously using Z.
+[P92] After gender swap: (Woman)
+[P93] Used name/gender change,
+[P94] Obtained blue eye color,
+[P95] Switched name to "Giselle",
+[P96] Zombified 7+ division 11 members at once,
+[P97] Commanded all to return then die,
+[P98] Killed 20+ people in one mode,
+[P99] Hit 14 division 11 members with the passive,
+[P100] Hit 14 division 11 members with Splatter (T),
+[P101] Hit and knocked 14 division 11 members with Self Infliction (G),
+[P102] Forced 14 division 11 members to kneel with Implode (Z),
+[P103] Hit and knocked 14 division 11 members with Dancing Dead Boys (X),
+[P104] Hit and knocked 14 division 11 members with Blood Drive (C),
+[P105] Force popped 7 people in one mode,
+[P106] Gripped 7 mode users in one mode,
+[P107] Became a zombie and got my mode force popped, then zombified and force popped another user.
+[P108] Talked to Jugram as a zombie.
+[P109] Zombified a true mode user and allowed them to kill another player.
+[P110] Zombified a true explode user while they were in true mode.
+[P111] Zombified a user in a clan and made them kill a fellow clan member.
+[P112] Changed skin color to match zombies then zombified many people.
+[P113] Zombified every schrift.
+[P114] Changed clan to McAllon.
+[P115] Used female face and eyes.
+[P116] Used female torso on Roblox avatar.
+[P117] Equipped Bambietta heart.
+[P118] Equipped mini quincy hat.
+[P119] Equipped quincy clothes similar to Giselle's.
+[P120] Changed Roblox account gender to female.
+[P121] Zombified 3 arrancars in the same clan while in volt.
+[P122] Lined up multiple users → filled blood bar to 100% using G → popped volt → zombified and force popped all of them.
+[P123] Attempted to zombify a zombie.
+[P124] Force popped another user's mode while being a zombie.
+[P125] Commanded zombie to “Eat”, “Devour”, and “Brain”.
+[P126] Had a zombified glutton eat someone.
+[P127] Zombified and force popped the mode of 10 non-quincy females.
+[P128] Spammed 50+ cullings with zombie true.
+[P129] Became “like them” using same outfit, gender, and accessories before zombifying a quincy.
+[P130] Zombified an explode user wearing quincy hat while wearing mini quincy hat.
+[P131] Zombified explode user using both mini quincy hat and quincy hat.
+[P132] Used commands on all affected users.
+[P133] Used invade on a female zombie.
+[P134] Zombified a compulsory user and tried forcing them to use G on female zombie user.
+[P135] Used blood-related moves on partied and non-partied zombies.
+[P136] Infection-style zombification chain between 3 players.
+[P137] Auto-gripped my own zombie with death flair.
+[P138] Zombified a quincy while using female gender and woman bundle.
+[P139] Zombified an SR while using female gender and woman bundle.
+[P140] Zombified a quincy while using female gender and man bundle.
+[P141] Zombified an SR while using female gender and man bundle.
+[P142] Zombified a quincy while using female gender and Roblox boy bundle.
+[P143] Zombified an SR while using female gender and Roblox boy bundle.
+[P144] Renamed myself and alt account, then zombified and used commands.
+[P145] As a female, zombified alt during body swap and used commands.
+[P146] Got a fear user to proc max fear on a zombie.
+[P147] Zombified a player affected by fear.
+[P148] Made a player insane with fear volt before, during, and after zombification.
+[P149] Zombified 9 SRs at 0% blood while in Soul Society.
+[P150] Force popped the mode of 8 non-quincies at 100% blood bar.
+[P151] Rolled off zombie, rolled for it again, swapped gender to female, used Yhwach blood for volt, talked to balance NPC, then zombified multiple Bambies squad element users and used commands on them.
+[P152] Went to Hueco and built meter using splatter on 3 Arrancars.
+[P153] Forced a soul reaper in Hueco to pop Snow Bankai while in volt.
+[P154] Zombified 5+ quincies in Wand.
+[P155] Used splatter on 7 SRs at once.
+[P156] Used self-infliction on 7 SRs at once.
+[P157] Used splatter 10+ times on 7 SRs simultaneously.
+[P158] Used return on 7 zombified SRs at once.
+[P159] Used die on 7 SRs at once.
+[P160] Controlled 7 zombies simultaneously.
+[P161] Gender RR’d from woman to man with the name Giselle.
+[P162] Used Yhwach’s blood after RR’ing to zombie and talked to balance NPC.
+[P163] Used splatter on 7 SRs at once.
+[P164] Used self-infliction on 7 SRs at once.
+[P165] Used splatter 10+ times on 7 SRs simultaneously.
+[P166] Used return on 7 zombified SRs at once.
+[P167] Used die on 7 SRs at once.
+[P168] Had 7 zombies simultaneously.
+[P169] Talked to every marked NPC in Wand.
+[P170] Went to Ring 1 and defeated Hiragana.
+[P171] Went to Ring 2 and defeated Hiragana again.
+[P172] Obtained True Shrift.
+[P173] Used splatter 10+ times on 7 SRs simultaneously.
+[P174] Used self-harm 10 times on 7 SRs simultaneously.
+[P175] Downed 7 SRs.
+[P176] Controlled 7 SR zombies while in volt.
+[P177] Used return 10 times with 7 SRs.
+[P178] Used die on 7 SRs.
+[P179] In Ring 3, gripped true bankai and segunda ancient with devil trigger, sent them to purgatory after using return 10 times and die.
+[P180] Went to Ring 1 and was killed twice by bankai SRs.
+[P181] Went to purgatory, used multiple moves in true volt, and defeated 5 copies.
+[P182] Talked to the “...” NPC in Wand.
+[P183] Talked to Ayin.
+[P184] Talked to Won.
+[P185] Talked to Serei in Ring 2.
+[P186] Gripped and zombified X-Axis and Power.
+[P187] Talked to Daniel Forge in KT.
+[P188] Talked to Ugo in the library.
+[P189] Interacted with Schatten “The Liberator” in the library.
+[P190] Tried talking to the hollow/arrancar frozen in ice in the library.
+[P191] Talked to Qas J Ward.
+[P192] Talked to Setro.
+[P193] Talked to The Prodigy.
+[P194] Talked to Kisuke and another NPC afterward.
+[P195] Talked to Neli at the bank.
+[P196] Talked to Bambietta.
+[P197] Talked with Myrnite.
+[P198] Talked with Avarice.
+[P199] Tried interacting with Bong Bong.
+[P200] Tried talking with Sshifto.
+[P201] Tried talking with the mysterious witch.
+[P202] Zombified true gift (wind) at full blood bar and used return/die.
+[P203] Zombified a true balance user at full blood bar and used return/die.
+[P204] Used splatter repeatedly on a barely alive soul reaper.
+[P205] Used self-infliction repeatedly on a barely alive soul reaper.
+[P206] Used splatter 10+ times on a knocked soul reaper.
+[P207] Filled the blood meter of a true balance quincy, had another player knock them, then gripped and zombified them before using return/die.
+[P208] Equipped quincy outfit and mini quincy hat.
+[P209] Was knocked by another quincy for 20 minutes in Ring 3.
+[P210] In AFK World, grouped 7 soul reapers together in a party, filled their blood bars, damaged the zombie user, then gripped them.
+[P211] In AFK World, repeated the process and used splatter after meter reached 100.
+[P212] In KT, filled blood bars of 8 soul reapers using an alt, manually zombified them, then used return 10 times and die once.
+[P213] Was killed and zombified by a ranked overworld zombie player.
+[P214] Talked to balance NPC while being a zombie.
+[P215] Then zombified that same player and both used commands.
+[P216] Went to purgatory, gender RR’d twice, paid to leave, and checked balance NPC again.
+[P221] Done as a Female then as a Male (with the name Giselle)
+[P222] All done as a Female named Giselle, then repeated as a male named Giselle
+[P223] Built meter on soul reaper, used "/e shy", gripped, used return + die, checked balance npc.
+[P224] Built meter on soul reaper, used "/e cry", gripped, used return + die, checked balance npc.
+[P225] Built meter on soul reaper, typed "lame" in chat, used "/e cry", used "/e shy", gripped, used return + die, checked balance npc.
+[P226] Built meter on soul reaper, used "/e shy", gripped to zombify, used "/e bwahahah", used return + die, checked balance npc.
+[P227] Built meter on soul reaper, gripped, used Dancing Dead Boys (X), used "/e dance3" + "/e freestyle", used return + die, checked balance npc.
+[P228] Built meter on soul reaper, typed "boku" in chat, used "/e shy", gripped, used return + die, checked balance npc. (supposedly my friend who speaks Japanese said it's worth testing)
+[P229] Built meter on soul reaper, had alt type "man" + "boy" + "boi" + "male"  in chat, used "/e cry", gripped, used return + die, checked balance npc.
+[P230] Built meter on soul reaper, used "/e twirl", used "/e bow", gripped, used return + die, checked balance npc.
+[P231] Built meter on soul reaper, gripped to zombify, used "/e kneel" next to zombie, used return + die, used "/e baibai" on corpse, checked balance npc
+[P237] POST RESURGENCE UPDATE:
+[P238] Went to new Wanderich and zombified 3 players
+[P239] Popped Volt and zombified 1 soul reaper
+[P240] Zombified a Quincy with the exact same name, gender, clan, and build.
+[P241] Zombified a Division 11 SR w/ just passive after gender swap.
+[P242] Zombified female quincy, then used gender change while they were a zombie
+[P243] Knocked female quincy at 100% blood bar, then used gender change then zombified them
+[P244] Zombified the same player in the same server as both male and female
+[P245] Used confusion body swap and zombified whoever got my avatar
+[P246] Used confusion body swap and zombified 1 sr and 1 quincy and forced them to watch me use a name/gender change (FEMALE TO MALE)
+[P247] Zombified a quincy who was zombifing an Arrancar
+[P248] Built meter to 100% on myself using splatter, zombified a soul reaper
+[P249] Built meter to 100% on myself using splatter, zombified a quincy and a soul reaper (i think)
+[P250] Built meter to 100% on myself using splatter, got killed by another zombie user (no zombify)
+[P251] Built meter to 100% on myself using splatter, got knocked by myself using splatter, got gripped by another zombie user
+[P252] Built meter to 100% on myself using splatter, gripped another quincy at 0%
+[P253] Zombified 20+ Male players at once in clan room using implode in volt
+[P254] Zombified 20+ female players at once in clan room using implode
+[P255] Entered a zombie battle 12v12 zombies in different parties
+[P256] Zombified 20+ players as the opposite gender
+[P257] Zombified 14+ SR/ARRANCAR players twice in a hueco raid where quinices were outnumbered (i lost the raid)
+[P258] Gender swapped, zombified 20+ males as males, Gender swapped, zombified 20+ females as female
+[P259] Gender swapped, zombified 2 males as males, Gender swapped, zombified 2 females as female, gender swapped to male, zombifed 2 females, gender swapped to female and zombified 2 males
+[P260] Started as male, zombified 10 of same gender and 10 of opposite gender, gender swapped to female, zombified 10 of same gender and 10 of opposite gender
+[P262] (To do List)
+[P263] (Putting more tests here in the future - TheAscended)
+[P265] Giselle Gewelle information (manga and anime)
+[P268] Official Wiki: Giselle Gewelle | Bleach Wiki | Fandom
+[P271] Important Actions
+[P287] (This are the only actions she was doing in the anime/manga, no more information)
+[P296] Anime/manga chapters (related to her/him)
+[P299] Battle of the Zombies | Bleach Wiki | Fandom
+[P303] Ichigo Kurosaki vs. The Bambies | Bleach Wiki | Fandom
+[P306] Sajin Komamura vs. Bambietta Basterbine | Bleach Wiki | Fandom
+[P309] Kenpachi Zaraki vs. Gremmy Thoumeaux | Bleach Wiki | Fandom
+[P312] The Gotei 13 vs. The Sternritter | Bleach Wiki | Fandom

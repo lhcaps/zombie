@@ -1,0 +1,9 @@
+# Exclude archive folder (contains node_modules with very long filenames)
+99_ARCHIVE_OLD_RUNS/
+
+# Large binary files
+*.zip
+*.docx
+
+# Python cache
+__pycache__/

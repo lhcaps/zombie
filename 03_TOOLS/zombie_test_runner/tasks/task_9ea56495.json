@@ -1,0 +1,70 @@
+{
+  "task_id": "task_9ea56495",
+  "test_type": "unknown_pair",
+  "spec": "F_50_CHAR_MIRROR",
+  "label": "Appearance Mirror / Character Copy after x50 (Female)",
+  "blocks": [
+    {
+      "step": 1,
+      "phase": "gender_reroll",
+      "actor": "quest_holder",
+      "target": "-",
+      "action": "Use exactly one gender reroll so actor final gender is Female."
+    },
+    {
+      "step": 2,
+      "phase": "same_gender_zombify",
+      "actor": "F",
+      "target": "F",
+      "repeat": "x50",
+      "action": "For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie."
+    },
+    {
+      "step": 3,
+      "phase": "milestone_checks",
+      "actor": "quest_holder",
+      "target": "-",
+      "action": "Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls."
+    },
+    {
+      "step": 4,
+      "phase": "unknown_task_a",
+      "actor": "F",
+      "target": "F",
+      "repeat": "same fixed amount if measurable",
+      "action": "copy or mirror another player's character appearance without item/accessory requirements"
+    },
+    {
+      "step": 5,
+      "phase": "unknown_task_b",
+      "actor": "F",
+      "target": "F",
+      "repeat": "same fixed amount if measurable",
+      "action": "zombify a same-gender target while the character-copy/mirror relation is active"
+    },
+    {
+      "step": 6,
+      "phase": "check",
+      "actor": "quest_holder",
+      "target": "-",
+      "action": "Check Jugram/Balance. If failed, swap the order of task A/B only."
+    }
+  ],
+  "hard_rules": [
+    "Exactly one gender reroll for the clean route",
+    "After the reroll, use same-gender targets only",
+    "Targets can be any race and do not need to be unique",
+    "Every zombification must be manual grip",
+    "Use passive Blood Bar whenever possible",
+    "No return/die/invade commands for clean tests",
+    "Zombies do NOT act after conversion",
+    "No Volt or mode for clean tests",
+    "Do not use a second gender reroll unless deliberately resetting after a failed route"
+  ],
+  "probability": 0.231,
+  "info_gain": 2.1140352432460294,
+  "score": 0.4883421411898328,
+  "context": "# AI Test Runner \u2014 Task Assignment\n\n## Task ID: task_9ea56495\n\n## Test Type: unknown_pair\n## Spec: F_50_CHAR_MIRROR\n## Label: Appearance Mirror / Character Copy after x50 (Female)\n\n## Probability of Success: 0.2310 (23.10%)\n## Expected Info Gain: 2.11 bits\n## Score (P \u00d7 IG): 0.4883\n\n---\n\n## Steps to Execute\n\n1. **Use exactly one gender reroll so actor final gender is Female.** \u2014 actor=quest_holder, target=-\n2. **For each same-gender target: passive Blood Bar -> knock -> manual grip -> confirm zombie.** \u2014 actor=F, target=F, repeat=x50\n3. **Check NPC only at safe milestones: 40, 45, 49, 50, then stop before extra rerolls.** \u2014 actor=quest_holder, target=-\n4. **copy or mirror another player's character appearance without item/accessory requirements** \u2014 actor=F, target=F, repeat=same fixed amount if measurable\n5. **zombify a same-gender target while the character-copy/mirror relation is active** \u2014 actor=F, target=F, repeat=same fixed amount if measurable\n6. **Check Jugram/Balance. If failed, swap the order of task A/B only.** \u2014 actor=quest_holder, target=-\n\n---\n\n## Hard Rules \u2014 Do NOT Break\n\n- Exactly one gender reroll for the clean route\n- After the reroll, use same-gender targets only\n- Targets can be any race and do not need to be unique\n- Every zombification must be manual grip\n- Use passive Blood Bar whenever possible\n- No return/die/invade commands for clean tests\n- Zombies do NOT act after conversion\n- No Volt or mode for clean tests\n- Do not use a second gender reroll unless deliberately resetting after a failed route\n\n---\n\n## Outcome Logging\n\nAfter completing the test, fill in:\n\n```\nRun ID: task_9ea56495\nOutcome: PASS / FAIL / BLOCKED / UNKNOWN\nNPC Result: (what Jugram/Balance said)\nNotes: (anything unusual)\nTarget genders confirmed:\nTarget races:\nBlood Bar values:\nManual grip confirmed: YES / NO\nZombie confirmed: YES / NO\nGender swap confirmed: YES / NO\nCommands used: NONE\nVolt/mode used: NONE\n```\n\nSave your result to:\n`D:\\Study\\Project\\zombie\\03_TOOLS\\zombie_test_runner\\results\\task_9ea56495.json`\n",
+  "created_at": "2026-05-22T00:47:26.944788",
+  "status": "pending"
+}

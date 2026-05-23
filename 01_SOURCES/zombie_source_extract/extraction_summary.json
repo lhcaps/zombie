@@ -1,0 +1,202 @@
+[
+  {
+    "file": "D:\\Study\\Project\\zombie\\_Zombie Checklist Database.docx",
+    "exists": true,
+    "size": 1081262,
+    "sha256": "7b419032d183b784",
+    "paragraphs": 248,
+    "tables": 0,
+    "text_path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database.txt",
+    "media": [
+      {
+        "name": "word/media/image18.png",
+        "size": 4280,
+        "sha256": "ce03c084a70b2695",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image18.png"
+      },
+      {
+        "name": "word/media/image3.png",
+        "size": 24124,
+        "sha256": "695c3c56a230dcd4",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image3.png"
+      },
+      {
+        "name": "word/media/image1.png",
+        "size": 12139,
+        "sha256": "ca17dc3e714da11b",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image1.png"
+      },
+      {
+        "name": "word/media/image15.png",
+        "size": 1783,
+        "sha256": "d8c7fc629c37e908",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image15.png"
+      },
+      {
+        "name": "word/media/image4.png",
+        "size": 2365,
+        "sha256": "2783596333fd1885",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image4.png"
+      },
+      {
+        "name": "word/media/image6.png",
+        "size": 10020,
+        "sha256": "1164470e2c4f3df1",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image6.png"
+      },
+      {
+        "name": "word/media/image8.png",
+        "size": 12372,
+        "sha256": "e11d75fd486b6a6d",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image8.png"
+      },
+      {
+        "name": "word/media/image13.png",
+        "size": 13175,
+        "sha256": "b21d71d1d85c5a9a",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image13.png"
+      },
+      {
+        "name": "word/media/image11.png",
+        "size": 10158,
+        "sha256": "cdb868cfe319be96",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image11.png"
+      },
+      {
+        "name": "word/media/image2.png",
+        "size": 31650,
+        "sha256": "4fcaf613a28920eb",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image2.png"
+      },
+      {
+        "name": "word/media/image17.png",
+        "size": 805771,
+        "sha256": "f21409751a0b637d",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image17.png"
+      },
+      {
+        "name": "word/media/image20.png",
+        "size": 11684,
+        "sha256": "198d91d6c6e1b039",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image20.png"
+      },
+      {
+        "name": "word/media/image19.png",
+        "size": 11423,
+        "sha256": "4943bcd742b6bf0b",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image19.png"
+      },
+      {
+        "name": "word/media/image5.png",
+        "size": 6563,
+        "sha256": "c41edd56b271de34",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image5.png"
+      },
+      {
+        "name": "word/media/image16.png",
+        "size": 3147,
+        "sha256": "fb055e102a7b841c",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image16.png"
+      },
+      {
+        "name": "word/media/image14.png",
+        "size": 10357,
+        "sha256": "99a2596005e25931",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image14.png"
+      },
+      {
+        "name": "word/media/image9.png",
+        "size": 21538,
+        "sha256": "6102c40ef77424bb",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image9.png"
+      },
+      {
+        "name": "word/media/image10.png",
+        "size": 29907,
+        "sha256": "18c559af7fc97d71",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image10.png"
+      },
+      {
+        "name": "word/media/image12.png",
+        "size": 15700,
+        "sha256": "add02ac2cb5e1176",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image12.png"
+      },
+      {
+        "name": "word/media/image7.png",
+        "size": 22540,
+        "sha256": "b3a039e18dc8b885",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\_Zombie_Checklist_Database__image7.png"
+      }
+    ]
+  },
+  {
+    "file": "D:\\Study\\Project\\zombie\\The Almighty Quests.docx",
+    "exists": true,
+    "size": 11553,
+    "sha256": "8869e13611601d36",
+    "paragraphs": 69,
+    "tables": 0,
+    "text_path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\The_Almighty_Quests.txt",
+    "media": []
+  },
+  {
+    "file": "C:\\Users\\ADMIN\\Downloads\\TYPE___SOUL - Almighty [All Zombe Hints].docx",
+    "exists": true,
+    "size": 847049,
+    "sha256": "06cb86e273cfb90d",
+    "paragraphs": 25,
+    "tables": 0,
+    "text_path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints.txt",
+    "media": [
+      {
+        "name": "word/media/image3.png",
+        "size": 15749,
+        "sha256": "511910c865dbe7d3",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image3.png"
+      },
+      {
+        "name": "word/media/image1.png",
+        "size": 72208,
+        "sha256": "06076dcabe4fac5c",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image1.png"
+      },
+      {
+        "name": "word/media/image4.png",
+        "size": 38041,
+        "sha256": "41a6c8ef93bf1209",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image4.png"
+      },
+      {
+        "name": "word/media/image6.png",
+        "size": 20817,
+        "sha256": "a2cae40f641af610",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image6.png"
+      },
+      {
+        "name": "word/media/image8.png",
+        "size": 62014,
+        "sha256": "73cd40d8638ef4dd",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image8.png"
+      },
+      {
+        "name": "word/media/image2.png",
+        "size": 78157,
+        "sha256": "05ba1572a3cd7e34",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image2.png"
+      },
+      {
+        "name": "word/media/image5.png",
+        "size": 108599,
+        "sha256": "74320df5f7b41683",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image5.png"
+      },
+      {
+        "name": "word/media/image7.png",
+        "size": 40808,
+        "sha256": "18207d5a4c6c04fa",
+        "path": "D:\\Study\\Project\\zombie\\zombie_source_extract\\TYPE___SOUL_-_Almighty_All_Zombe_Hints__image7.png"
+      }
+    ]
+  }
+]
